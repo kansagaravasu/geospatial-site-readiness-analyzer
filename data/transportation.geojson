@@ -1,0 +1,341 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.62,
+            12.915
+          ],
+          [
+            77.645,
+            12.918
+          ],
+          [
+            77.678,
+            12.93
+          ],
+          [
+            77.7,
+            12.96
+          ],
+          [
+            77.685,
+            13.0
+          ],
+          [
+            77.62,
+            13.04
+          ],
+          [
+            77.58,
+            13.035
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Outer Ring Road (ORR) Tech Expressway",
+        "road_type": "Highway",
+        "traffic_aadt": 165000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.61,
+            12.93
+          ],
+          [
+            77.63,
+            12.89
+          ],
+          [
+            77.66,
+            12.855
+          ],
+          [
+            77.68,
+            12.835
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Hosur Road & Electronic City Elevated Expressway (NH-44)",
+        "road_type": "Highway",
+        "traffic_aadt": 145000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.59,
+            12.99
+          ],
+          [
+            77.597,
+            13.035
+          ],
+          [
+            77.61,
+            13.12
+          ],
+          [
+            77.68,
+            13.2
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bengaluru Airport Expressway / Bellary Road (NH-44)",
+        "road_type": "Highway",
+        "traffic_aadt": 130000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.62,
+            12.98
+          ],
+          [
+            77.66,
+            12.985
+          ],
+          [
+            77.72,
+            13.0
+          ],
+          [
+            77.78,
+            13.02
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Old Madras Road Arterial (NH-75)",
+        "road_type": "Highway",
+        "traffic_aadt": 95000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.5,
+            12.88
+          ],
+          [
+            77.53,
+            12.86
+          ],
+          [
+            77.61,
+            12.84
+          ],
+          [
+            77.67,
+            12.845
+          ]
+        ]
+      },
+      "properties": {
+        "name": "NICE Peripheral Ring Road",
+        "road_type": "Highway",
+        "traffic_aadt": 85000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.595,
+            12.92
+          ],
+          [
+            77.6,
+            12.88
+          ],
+          [
+            77.595,
+            12.84
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bannerghatta Road Commercial Arterial",
+        "road_type": "Highway",
+        "traffic_aadt": 78000,
+        "speed_limit_mph": 50,
+        "accessibility_score": 95,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.5728,
+          12.9757
+        ]
+      },
+      "properties": {
+        "name": "Majestic / Kempegowda Metro Interchange Hub",
+        "road_type": "Transit Hub",
+        "hub_type": "Metro Rail Hub",
+        "daily_passengers": 85000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6234,
+          12.9174
+        ]
+      },
+      "properties": {
+        "name": "Silk Board Junction Transit & Metro Terminal",
+        "road_type": "Transit Hub",
+        "hub_type": "Bus Rapid / Metro",
+        "daily_passengers": 62000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.76,
+          12.996
+        ]
+      },
+      "properties": {
+        "name": "Whitefield (Kadugodi) Metro Terminal",
+        "road_type": "Transit Hub",
+        "hub_type": "Metro Rail",
+        "daily_passengers": 38000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.7066,
+          13.1986
+        ]
+      },
+      "properties": {
+        "name": "Kempegowda International Airport Terminal (BLR)",
+        "road_type": "Transit Hub",
+        "hub_type": "International Airport",
+        "daily_passengers": 95000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.5501,
+          13.0232
+        ]
+      },
+      "properties": {
+        "name": "Yeshwanthpur Railway & Metro Station",
+        "road_type": "Transit Hub",
+        "hub_type": "Intercity Rail / Metro",
+        "daily_passengers": 48000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6792,
+          13.0012
+        ]
+      },
+      "properties": {
+        "name": "KR Puram Multi-Modal Transit Interchange",
+        "road_type": "Transit Hub",
+        "hub_type": "Rail / Metro / Bus",
+        "daily_passengers": 42000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6385,
+          12.9783
+        ]
+      },
+      "properties": {
+        "name": "Indiranagar Metro Station",
+        "road_type": "Transit Hub",
+        "hub_type": "Metro Rail",
+        "daily_passengers": 32000,
+        "layer_type": "transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.665,
+          12.8452
+        ]
+      },
+      "properties": {
+        "name": "Electronic City Metro Hub",
+        "road_type": "Transit Hub",
+        "hub_type": "Metro Rail",
+        "daily_passengers": 36000,
+        "layer_type": "transportation"
+      }
+    }
+  ]
+}

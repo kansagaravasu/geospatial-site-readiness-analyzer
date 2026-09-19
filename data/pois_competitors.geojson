@@ -1,0 +1,413 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6415,
+          12.977
+        ]
+      },
+      "properties": {
+        "name": "Tata Power EV Supercharging Hub - Indiranagar",
+        "category": "competitor",
+        "sub_type": "EV Fast Charging Station",
+        "metric_value": 16,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.622,
+          12.934
+        ]
+      },
+      "properties": {
+        "name": "Ather Grid Fast Charging Point - Koramangala",
+        "category": "competitor",
+        "sub_type": "EV Two-Wheeler / Car Hub",
+        "metric_value": 10,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.674,
+          12.842
+        ]
+      },
+      "properties": {
+        "name": "Jio-bp Pulse EV Charging Hub - Electronic City",
+        "category": "competitor",
+        "sub_type": "EV Charging Station",
+        "metric_value": 12,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.648,
+          12.914
+        ]
+      },
+      "properties": {
+        "name": "Zepto Quick-Commerce Dark Store - HSR Sector 1",
+        "category": "competitor",
+        "sub_type": "Quick Commerce Micro-Warehouse",
+        "metric_value": 0,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.741,
+          12.972
+        ]
+      },
+      "properties": {
+        "name": "Blinkit Dark Fulfillment Depot - Whitefield",
+        "category": "competitor",
+        "sub_type": "Quick Commerce Warehouse",
+        "metric_value": 0,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.682,
+          12.932
+        ]
+      },
+      "properties": {
+        "name": "Competitor 5G Cell Tower - Bellandur ORR",
+        "category": "competitor",
+        "sub_type": "5G Telecom Infrastructure",
+        "metric_value": 0,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.701,
+          12.955
+        ]
+      },
+      "properties": {
+        "name": "Competitor Hypermarket - Marathahalli",
+        "category": "competitor",
+        "sub_type": "Retail Superstore",
+        "metric_value": 0,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.697,
+          12.996
+        ]
+      },
+      "properties": {
+        "name": "Phoenix Marketcity & VR Bengaluru",
+        "category": "anchor_tenant",
+        "sub_type": "Regional Mega Mall",
+        "metric_value": 35000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.611,
+          12.9345
+        ]
+      },
+      "properties": {
+        "name": "Nexus Mall Koramangala",
+        "category": "anchor_tenant",
+        "sub_type": "Urban Mall & Cinema",
+        "metric_value": 22000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.62,
+          13.048
+        ]
+      },
+      "properties": {
+        "name": "Manyata Embassy Business Park (Nagavara)",
+        "category": "anchor_tenant",
+        "sub_type": "Major IT Tech Park (120k techies)",
+        "metric_value": 75000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.685,
+          12.926
+        ]
+      },
+      "properties": {
+        "name": "RMZ Ecoworld & Ecospace Tech Hub (ORR)",
+        "category": "anchor_tenant",
+        "sub_type": "Tier-1 Tech Park Campus",
+        "metric_value": 60000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.738,
+          12.986
+        ]
+      },
+      "properties": {
+        "name": "International Tech Park Bangalore (ITPL)",
+        "category": "anchor_tenant",
+        "sub_type": "IT Tech Park (Whitefield)",
+        "metric_value": 50000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.596,
+          12.9715
+        ]
+      },
+      "properties": {
+        "name": "UB City Luxury Business & Retail Core",
+        "category": "anchor_tenant",
+        "sub_type": "Central CBD Commercial Complex",
+        "metric_value": 18000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.66,
+          12.98
+        ]
+      },
+      "properties": {
+        "name": "Bagmane Tech Park - CV Raman Nagar",
+        "category": "anchor_tenant",
+        "sub_type": "ITeS Software Park",
+        "metric_value": 32000,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.643,
+          12.971
+        ]
+      },
+      "properties": {
+        "name": "Third Wave Coffee Flagship - Indiranagar 12th Main",
+        "category": "complementary",
+        "sub_type": "Premium Cafe / Workspace",
+        "metric_value": 2800,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.627,
+          12.936
+        ]
+      },
+      "properties": {
+        "name": "Nature's Basket Gourmet - Koramangala",
+        "category": "complementary",
+        "sub_type": "Gourmet Supermarket",
+        "metric_value": 3200,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.674,
+          12.933
+        ]
+      },
+      "properties": {
+        "name": "Shell Mobility Fuel & EV Station - Bellandur",
+        "category": "complementary",
+        "sub_type": "Mobility / EV Quick Stop",
+        "metric_value": 4100,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.729,
+          12.989
+        ]
+      },
+      "properties": {
+        "name": "Decathlon Sports Megastore - Whitefield",
+        "category": "complementary",
+        "sub_type": "Sports & Retail Complex",
+        "metric_value": 5500,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.604,
+          12.975
+        ]
+      },
+      "properties": {
+        "name": "Starbucks Reserve - Church Street",
+        "category": "complementary",
+        "sub_type": "Premium Dining & Cafe",
+        "metric_value": 3400,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.518,
+          13.031
+        ]
+      },
+      "properties": {
+        "name": "BESCOM 220/66kV Substation - Peenya Industrial",
+        "category": "utility_substation",
+        "sub_type": "High Voltage Industrial Grid",
+        "metric_value": 120,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.715,
+          12.992
+        ]
+      },
+      "properties": {
+        "name": "BESCOM 220kV Electrical Substation - Hoodi / Whitefield",
+        "category": "utility_substation",
+        "sub_type": "High Capacity Grid Substation",
+        "metric_value": 150,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.619,
+          12.938
+        ]
+      },
+      "properties": {
+        "name": "BESCOM 66kV Electrical Substation - Koramangala",
+        "category": "utility_substation",
+        "sub_type": "Urban Power Substation",
+        "metric_value": 65,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.671,
+          12.836
+        ]
+      },
+      "properties": {
+        "name": "BESCOM 220kV Substation - Electronic City Phase 1",
+        "category": "utility_substation",
+        "sub_type": "Hi-Tech Power Substation",
+        "metric_value": 100,
+        "layer_type": "poi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.605,
+          13.04
+        ]
+      },
+      "properties": {
+        "name": "BESCOM 66kV Substation - Hebbal / Nagavara",
+        "category": "utility_substation",
+        "sub_type": "Substation",
+        "metric_value": 80,
+        "layer_type": "poi"
+      }
+    }
+  ]
+}

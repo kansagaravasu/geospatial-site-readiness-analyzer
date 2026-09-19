@@ -1,0 +1,473 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5846,
+              12.9536
+            ],
+            [
+              77.6286,
+              12.9536
+            ],
+            [
+              77.6286,
+              12.9976
+            ],
+            [
+              77.5846,
+              12.9976
+            ],
+            [
+              77.5846,
+              12.9536
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "MG Road / CBD Commercial Core",
+        "population": 114999,
+        "pop_density": 12500,
+        "median_income": 145000,
+        "age_18_35_ratio": 0.48,
+        "growth_rate_pct": 0.07,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60249999999999,
+              12.9132
+            ],
+            [
+              77.6465,
+              12.9132
+            ],
+            [
+              77.6465,
+              12.9572
+            ],
+            [
+              77.60249999999999,
+              12.9572
+            ],
+            [
+              77.60249999999999,
+              12.9132
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Koramangala Startup & Retail Hub",
+        "population": 103039,
+        "pop_density": 11200,
+        "median_income": 138000,
+        "age_18_35_ratio": 0.58,
+        "growth_rate_pct": 0.12,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.6188,
+              12.9564
+            ],
+            [
+              77.6628,
+              12.9564
+            ],
+            [
+              77.6628,
+              13.0004
+            ],
+            [
+              77.6188,
+              13.0004
+            ],
+            [
+              77.6188,
+              12.9564
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Indiranagar / 100ft Road Corridor",
+        "population": 90160,
+        "pop_density": 9800,
+        "median_income": 142000,
+        "age_18_35_ratio": 0.52,
+        "growth_rate_pct": 0.09,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.72789999999999,
+              12.947799999999999
+            ],
+            [
+              77.7719,
+              12.947799999999999
+            ],
+            [
+              77.7719,
+              12.9918
+            ],
+            [
+              77.72789999999999,
+              12.9918
+            ],
+            [
+              77.72789999999999,
+              12.947799999999999
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Whitefield / ITPL Tech Corridor",
+        "population": 81880,
+        "pop_density": 8900,
+        "median_income": 126000,
+        "age_18_35_ratio": 0.62,
+        "growth_rate_pct": 0.16,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.655,
+              12.8179
+            ],
+            [
+              77.69900000000001,
+              12.8179
+            ],
+            [
+              77.69900000000001,
+              12.8619
+            ],
+            [
+              77.655,
+              12.8619
+            ],
+            [
+              77.655,
+              12.8179
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Electronic City Phase 1 & 2",
+        "population": 71760,
+        "pop_density": 7800,
+        "median_income": 115000,
+        "age_18_35_ratio": 0.65,
+        "growth_rate_pct": 0.14,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.62259999999999,
+              12.8901
+            ],
+            [
+              77.6666,
+              12.8901
+            ],
+            [
+              77.6666,
+              12.9341
+            ],
+            [
+              77.62259999999999,
+              12.9341
+            ],
+            [
+              77.62259999999999,
+              12.8901
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "HSR Layout / Unicorn Hub",
+        "population": 96599,
+        "pop_density": 10500,
+        "median_income": 132000,
+        "age_18_35_ratio": 0.6,
+        "growth_rate_pct": 0.15,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.65639999999999,
+              12.9084
+            ],
+            [
+              77.7004,
+              12.9084
+            ],
+            [
+              77.7004,
+              12.9524
+            ],
+            [
+              77.65639999999999,
+              12.9524
+            ],
+            [
+              77.65639999999999,
+              12.9084
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bellandur / Outer Ring Road Tech Belt",
+        "population": 86480,
+        "pop_density": 9400,
+        "median_income": 135000,
+        "age_18_35_ratio": 0.64,
+        "growth_rate_pct": 0.18,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.57499999999999,
+              13.0138
+            ],
+            [
+              77.619,
+              13.0138
+            ],
+            [
+              77.619,
+              13.0578
+            ],
+            [
+              77.57499999999999,
+              13.0578
+            ],
+            [
+              77.57499999999999,
+              13.0138
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Hebbal / Manyata Tech Park North",
+        "population": 75440,
+        "pop_density": 8200,
+        "median_income": 118000,
+        "age_18_35_ratio": 0.49,
+        "growth_rate_pct": 0.13,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5718,
+              12.903
+            ],
+            [
+              77.61580000000001,
+              12.903
+            ],
+            [
+              77.61580000000001,
+              12.947000000000001
+            ],
+            [
+              77.5718,
+              12.947000000000001
+            ],
+            [
+              77.5718,
+              12.903
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Jayanagar / JP Nagar South",
+        "population": 108559,
+        "pop_density": 11800,
+        "median_income": 110000,
+        "age_18_35_ratio": 0.38,
+        "growth_rate_pct": 0.06,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.49119999999999,
+              13.0114
+            ],
+            [
+              77.5352,
+              13.0114
+            ],
+            [
+              77.5352,
+              13.0554
+            ],
+            [
+              77.49119999999999,
+              13.0554
+            ],
+            [
+              77.49119999999999,
+              13.0114
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Peenya Industrial Zone",
+        "population": 38640,
+        "pop_density": 4200,
+        "median_income": 72000,
+        "age_18_35_ratio": 0.32,
+        "growth_rate_pct": 0.05,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5743,
+              13.0787
+            ],
+            [
+              77.6183,
+              13.0787
+            ],
+            [
+              77.6183,
+              13.1227
+            ],
+            [
+              77.5743,
+              13.1227
+            ],
+            [
+              77.5743,
+              13.0787
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Yelahanka / Airport North Corridor",
+        "population": 56119,
+        "pop_density": 6100,
+        "median_income": 98000,
+        "age_18_35_ratio": 0.44,
+        "growth_rate_pct": 0.14,
+        "layer_type": "demographics"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.53099999999999,
+              12.9762
+            ],
+            [
+              77.575,
+              12.9762
+            ],
+            [
+              77.575,
+              13.0202
+            ],
+            [
+              77.53099999999999,
+              13.0202
+            ],
+            [
+              77.53099999999999,
+              12.9762
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Rajajinagar / Malleshwaram West",
+        "population": 121439,
+        "pop_density": 13200,
+        "median_income": 102000,
+        "age_18_35_ratio": 0.36,
+        "growth_rate_pct": 0.05,
+        "layer_type": "demographics"
+      }
+    }
+  ]
+}

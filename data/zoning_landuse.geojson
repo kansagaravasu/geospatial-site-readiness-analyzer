@@ -1,0 +1,590 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.595,
+              12.968
+            ],
+            [
+              77.615,
+              12.968
+            ],
+            [
+              77.615,
+              12.982
+            ],
+            [
+              77.595,
+              12.982
+            ],
+            [
+              77.595,
+              12.968
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "CBD-1 Central Commercial Core (MG Rd / Brigade)",
+        "zoning_code": "CBD-1 Central Commercial Core (MG Rd / Brigade)",
+        "zoning_type": "Commercial",
+        "zoning_score": 100,
+        "far_max": 4.0,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.725,
+              12.96
+            ],
+            [
+              77.76,
+              12.96
+            ],
+            [
+              77.76,
+              12.99
+            ],
+            [
+              77.725,
+              12.99
+            ],
+            [
+              77.725,
+              12.96
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "IT-1 Hi-Tech Software Tech Park Zone (Whitefield)",
+        "zoning_code": "IT-1 Hi-Tech Software Tech Park Zone (Whitefield)",
+        "zoning_type": "Commercial",
+        "zoning_score": 95,
+        "far_max": 3.5,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.66,
+              12.83
+            ],
+            [
+              77.69,
+              12.83
+            ],
+            [
+              77.69,
+              12.855
+            ],
+            [
+              77.66,
+              12.855
+            ],
+            [
+              77.66,
+              12.83
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "IT-2 Electronic City Special Tech Corridor",
+        "zoning_code": "IT-2 Electronic City Special Tech Corridor",
+        "zoning_type": "Commercial",
+        "zoning_score": 95,
+        "far_max": 3.5,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.66,
+              12.92
+            ],
+            [
+              77.7,
+              12.92
+            ],
+            [
+              77.7,
+              12.945
+            ],
+            [
+              77.66,
+              12.945
+            ],
+            [
+              77.66,
+              12.92
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "COM-2 Outer Ring Road Commercial Belt",
+        "zoning_code": "COM-2 Outer Ring Road Commercial Belt",
+        "zoning_type": "Commercial",
+        "zoning_score": 90,
+        "far_max": 3.25,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              13.015
+            ],
+            [
+              77.535,
+              13.015
+            ],
+            [
+              77.535,
+              13.05
+            ],
+            [
+              77.5,
+              13.05
+            ],
+            [
+              77.5,
+              13.015
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "IND-1 Peenya Heavy & Light Industrial Zone",
+        "zoning_code": "IND-1 Peenya Heavy & Light Industrial Zone",
+        "zoning_type": "Industrial",
+        "zoning_score": 90,
+        "far_max": 2.0,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.68,
+              12.81
+            ],
+            [
+              77.71,
+              12.81
+            ],
+            [
+              77.71,
+              12.835
+            ],
+            [
+              77.68,
+              12.835
+            ],
+            [
+              77.68,
+              12.81
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "IND-2 Bommasandra Industrial & Logistics Area",
+        "zoning_code": "IND-2 Bommasandra Industrial & Logistics Area",
+        "zoning_type": "Industrial",
+        "zoning_score": 85,
+        "far_max": 2.0,
+        "commercial_status": "ALLOWED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.62,
+              12.905
+            ],
+            [
+              77.655,
+              12.905
+            ],
+            [
+              77.655,
+              12.935
+            ],
+            [
+              77.62,
+              12.935
+            ],
+            [
+              77.62,
+              12.905
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "R-3 Residential High Density (HSR / Koramangala)",
+        "zoning_code": "R-3 Residential High Density (HSR / Koramangala)",
+        "zoning_type": "Residential",
+        "zoning_score": 60,
+        "far_max": 2.0,
+        "commercial_status": "CONDITIONAL",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.575,
+              13.0
+            ],
+            [
+              77.595,
+              13.0
+            ],
+            [
+              77.595,
+              13.025
+            ],
+            [
+              77.575,
+              13.025
+            ],
+            [
+              77.575,
+              13.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "R-2 Residential Low Density (Sadashivanagar)",
+        "zoning_code": "R-2 Residential Low Density (Sadashivanagar)",
+        "zoning_type": "Residential",
+        "zoning_score": 25,
+        "far_max": 1.5,
+        "commercial_status": "RESTRICTED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.655,
+              12.925
+            ],
+            [
+              77.715,
+              12.925
+            ],
+            [
+              77.715,
+              12.955
+            ],
+            [
+              77.655,
+              12.955
+            ],
+            [
+              77.655,
+              12.925
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "ECO-1 Bellandur & Varthur Lake Wetland Buffer",
+        "zoning_code": "ECO-1 Bellandur & Varthur Lake Wetland Buffer",
+        "zoning_type": "Conservation",
+        "zoning_score": 0,
+        "far_max": 0.0,
+        "commercial_status": "PROHIBITED",
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.736,
+              12.9845
+            ],
+            [
+              77.73899999999999,
+              12.9845
+            ],
+            [
+              77.73899999999999,
+              12.9865
+            ],
+            [
+              77.736,
+              12.9865
+            ],
+            [
+              77.736,
+              12.9845
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "ITPL Explorer Building Footprint",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Commercial Tech Office",
+        "building_floors": 12,
+        "rooftop_area_sqft": 45000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.683,
+              12.924
+            ],
+            [
+              77.68599999999999,
+              12.924
+            ],
+            [
+              77.68599999999999,
+              12.927
+            ],
+            [
+              77.683,
+              12.927
+            ],
+            [
+              77.683,
+              12.924
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "RMZ Ecoworld Tower 4 Footprint",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Commercial IT Office",
+        "building_floors": 14,
+        "rooftop_area_sqft": 62000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.6175,
+              13.046
+            ],
+            [
+              77.6215,
+              13.046
+            ],
+            [
+              77.6215,
+              13.049
+            ],
+            [
+              77.6175,
+              13.049
+            ],
+            [
+              77.6175,
+              13.046
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Manyata Block D4 Building Footprint",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Commercial Software Park",
+        "building_floors": 10,
+        "rooftop_area_sqft": 52000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5945,
+              12.97
+            ],
+            [
+              77.5965,
+              12.97
+            ],
+            [
+              77.5965,
+              12.972
+            ],
+            [
+              77.5945,
+              12.972
+            ],
+            [
+              77.5945,
+              12.97
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "UB City Concorde Tower Footprint",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Commercial Mixed-Use",
+        "building_floors": 19,
+        "rooftop_area_sqft": 28000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5115,
+              13.03
+            ],
+            [
+              77.51549999999999,
+              13.03
+            ],
+            [
+              77.51549999999999,
+              13.033
+            ],
+            [
+              77.5115,
+              13.033
+            ],
+            [
+              77.5115,
+              13.03
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Peenya Industrial Warehouse Shed #12",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Industrial Warehouse",
+        "building_floors": 2,
+        "rooftop_area_sqft": 38000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.67500000000001,
+              12.837
+            ],
+            [
+              77.678,
+              12.837
+            ],
+            [
+              77.678,
+              12.84
+            ],
+            [
+              77.67500000000001,
+              12.84
+            ],
+            [
+              77.67500000000001,
+              12.837
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Electronic City Cyber Park Footprint",
+        "zoning_type": "Building Footprint",
+        "structure_type": "Commercial Office",
+        "building_floors": 8,
+        "rooftop_area_sqft": 34000,
+        "zoning_score": 95,
+        "layer_type": "zoning"
+      }
+    }
+  ]
+}
