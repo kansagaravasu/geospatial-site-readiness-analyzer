@@ -1,56 +1,65 @@
+<div align="center">
+
 # 🌍 Geospatial Site Readiness Analyzer
 
-An AI-powered Geospatial Site Readiness Analyzer designed to evaluate and determine the suitability of locations for development using advanced spatial data processing.
+### AI-Powered Geospatial Intelligence for Smarter Site Selection
 
-## 🚀 Features
-- **AI-Powered Analysis**: Smart evaluation of geospatial parameters.
-- **Interactive Frontend**: User-friendly interface for seamless visualization.
-- **Robust Backend**: Fast and efficient server-side processing.
-- **Automated Testing**: Pre-configured test suites to ensure reliable performance.
+**Analyze • Visualize • Evaluate • Decide**
 
-## 📁 Project Structure
-```text
-├── backend/          # Server logic, APIs, and AI models
-├── frontend/         # Web interface and UI components
-├── tests/            # Automated test scripts
-├── run.py            # Main entry point script to run the project
-└── package-lock.json # Frontend dependency lock file
-```
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Project](https://img.shields.io/badge/Project-AI%20%2B%20Geospatial-blue.svg)]()
+[![Status](https://img.shields.io/badge/Status-Working%20Prototype-success.svg)]()
 
-## 🛠️ Installation & Setup
+</div>
 
-### Prerequisites
-Make sure you have **Python** and **Node.js** installed on your system.
+---
 
-### 1. Setup Backend
-```bash
-# Navigate to backend directory
-cd backend
+## 📌 Overview
 
-# Install dependencies (if requirements.txt exists)
-pip install -r requirements.txt
+**Geospatial Site Readiness Analyzer** is an AI-powered web application designed to evaluate the suitability and readiness of a geographical location for development.
 
-# Run the backend server
-python ../run.py
-```
+The platform combines **geospatial data, spatial analysis, visualization, and AI-assisted evaluation** to help users understand whether a selected location is suitable for a proposed development.
 
-### 2. Setup Frontend
-```bash
-# Navigate to frontend directory
-cd frontend
+---
 
-# Install dependencies
-npm install
+## 🎯 Problem Statement
 
-# Start the development server
-npm run dev # or npm start
-```
+Selecting a suitable location for development requires analysing multiple geographical and environmental factors.
 
-## 🧪 Running Tests
-To run the automated tests, execute:
-```bash
-python -m pytest tests/ # or your specific test command
-```
+Traditional site analysis can be:
 
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+- Time-consuming
+- Data-intensive
+- Difficult to visualize
+- Dependent on manual analysis
+
+Our system brings relevant geospatial information together and provides an **easy-to-understand, data-driven site readiness analysis**.
+
+---
+
+## ✨ Key Features
+
+| Feature | Description |
+|---|---|
+| 🤖 AI-Powered Analysis | Intelligent evaluation of geospatial parameters |
+| 🗺️ Interactive Map | Visual representation of geographical information |
+| 📍 Site Readiness | Evaluates suitability of selected locations |
+| 📊 Data Visualization | Converts spatial data into understandable insights |
+| ⚡ Fast Backend | Efficient server-side processing |
+| 🧪 Automated Testing | Test suite for reliable performance |
+| 💻 User-Friendly UI | Simple and responsive interface |
+
+---
+
+## 🔄 System Workflow
+
+```mermaid
+flowchart LR
+
+A["📍 Select Location"]
+--> B["🗺️ Collect Geospatial Data"]
+--> C["⚙️ Process Spatial Data"]
+--> D["🤖 AI Analysis"]
+--> E["📊 Site Readiness Evaluation"]
+--> F["🖥️ Visualize Results"]
+--> G["✅ Decision Support"]
