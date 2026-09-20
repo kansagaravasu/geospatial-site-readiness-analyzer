@@ -1,0 +1,331 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.655,
+              12.935
+            ],
+            [
+              77.675,
+              12.942
+            ],
+            [
+              77.695,
+              12.938
+            ],
+            [
+              77.7,
+              12.928
+            ],
+            [
+              77.685,
+              12.925
+            ],
+            [
+              77.665,
+              12.928
+            ],
+            [
+              77.655,
+              12.935
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bellandur Lake Wetland & 100-Yr Flood Basin",
+        "risk_type": "Flood Risk",
+        "hazard_detail": "Monsoon Floodplain",
+        "risk_level": "HIGH_RISK_100YR",
+        "flood_risk_penalty": 100,
+        "air_quality_aqi": 68,
+        "steep_slope_flag": false,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.71,
+              12.945
+            ],
+            [
+              77.74,
+              12.952
+            ],
+            [
+              77.745,
+              12.938
+            ],
+            [
+              77.72,
+              12.935
+            ],
+            [
+              77.71,
+              12.945
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Varthur Lake Stormwater Overflow Channel",
+        "risk_type": "Flood Risk",
+        "hazard_detail": "Flood Hazard Channel",
+        "risk_level": "HIGH_RISK_100YR",
+        "flood_risk_penalty": 100,
+        "air_quality_aqi": 68,
+        "steep_slope_flag": false,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.69,
+              12.905
+            ],
+            [
+              77.705,
+              12.915
+            ],
+            [
+              77.712,
+              12.902
+            ],
+            [
+              77.695,
+              12.898
+            ],
+            [
+              77.69,
+              12.905
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Rainbow Drive / Sarjapur Low-Lying Storm Basin",
+        "risk_type": "Flood Risk",
+        "hazard_detail": "Low-Lying Drainage Area",
+        "risk_level": "MEDIUM_RISK_500YR",
+        "flood_risk_penalty": 40,
+        "air_quality_aqi": 68,
+        "steep_slope_flag": false,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              12.8
+            ],
+            [
+              77.85,
+              12.8
+            ],
+            [
+              77.85,
+              13.0
+            ],
+            [
+              77.45,
+              13.0
+            ],
+            [
+              77.45,
+              12.8
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "BIS Seismic Zone II (Deccan Shield - Low Earthquake Risk)",
+        "risk_type": "Earthquake / Seismic Hazard",
+        "hazard_detail": "PGA 0.10g",
+        "risk_level": "Zone II (Low)",
+        "pga_value": 0.1,
+        "flood_risk_penalty": 0,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              13.0
+            ],
+            [
+              77.85,
+              13.0
+            ],
+            [
+              77.85,
+              13.2
+            ],
+            [
+              77.45,
+              13.2
+            ],
+            [
+              77.45,
+              13.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Seismic Zone III Transition Corridor (Mandya-Bengaluru Fault Margin)",
+        "risk_type": "Earthquake / Seismic Hazard",
+        "hazard_detail": "PGA 0.16g",
+        "risk_level": "Zone III (Moderate)",
+        "pga_value": 0.16,
+        "flood_risk_penalty": 0,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.568,
+          12.978
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - City Railway Station (CBD)",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 112 (Moderate)",
+        "air_quality_aqi": 112,
+        "aqi_category": "Moderate",
+        "pm25": 58,
+        "pm10": 95,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.61,
+          12.916
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - BTM Layout / Silk Board",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 78 (Satisfactory)",
+        "air_quality_aqi": 78,
+        "aqi_category": "Satisfactory",
+        "pm25": 38,
+        "pm10": 64,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.512,
+          13.03
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - Peenya Industrial Corridor",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 148 (Moderate)",
+        "air_quality_aqi": 148,
+        "aqi_category": "Moderate",
+        "pm25": 82,
+        "pm10": 128,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.545,
+          12.992
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - Saneguruvanahalli (West)",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 65 (Satisfactory)",
+        "air_quality_aqi": 65,
+        "aqi_category": "Satisfactory",
+        "pm25": 30,
+        "pm10": 55,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.732,
+          12.975
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - Whitefield Export Promotion Park",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 92 (Satisfactory)",
+        "air_quality_aqi": 92,
+        "aqi_category": "Satisfactory",
+        "pm25": 46,
+        "pm10": 78,
+        "layer_type": "environmental"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.602,
+          13.036
+        ]
+      },
+      "properties": {
+        "name": "CPCB CAAQMS Station - Hebbal Manyata North",
+        "risk_type": "Air Quality (AQI)",
+        "hazard_detail": "AQI 84 (Satisfactory)",
+        "air_quality_aqi": 84,
+        "aqi_category": "Satisfactory",
+        "pm25": 42,
+        "pm10": 71,
+        "layer_type": "environmental"
+      }
+    }
+  ]
+}
