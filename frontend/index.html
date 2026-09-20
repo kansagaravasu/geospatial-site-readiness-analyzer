@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoSite AI — Spatial Site Readiness Analyzer</title>
+    <meta name="description" content="AI-powered geospatial site readiness analyzer for EV charging, retail, logistics, telecom, and solar verticals. Built on H3 hexagons, Getis-Ord Gi*, and OSRM routing.">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet Draw -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css"/>
+    <link rel="stylesheet" href="./css/auth.css"/>
+</head>
+<body style="display:flex; flex-direction:column; height:100vh; overflow:hidden;">
+
+    <!-- ══════════════════════════════════════════
+         HEADER
+    ══════════════════════════════════════════ -->
+    <header id="app-header">
+        <!-- Logo -->
+        <div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
+            <div class="logo-mark">
+                <i class="fa-solid fa-earth-americas"></i>
+            </div>
+            <div>
+                <div class="app-title">GeoSite <span style="color:var(--cyan)">AI</span></div>
+                <div class="app-subtitle">Site Readiness Analyzer · India & Bengaluru Metro · PS-2</div>
+            </div>
+        </div>
+
+        <!-- AI Search Bar -->
+        <div style="flex:1; max-width:500px; margin:0 24px;">
+            <div class="search-container" style="position:relative;">
+                <i class="fa-solid fa-sparkles search-icon"></i>
+                <input type="text" id="aiQueryInput" class="search-input"
+                    placeholder="Ask AI — e.g. 'Top 3 EV sites near highways with low competitor density'…">
+                <button class="search-btn" onclick="handleAIQuery()">
+                    <i class="fa-solid fa-paper-plane"></i> Search
+                </button>
+            </div>
+            <div class="query-chips" style="margin-top:5px;">
+                <button class="query-chip" onclick="runQuickQuery('Top EV charging site with high traffic access')">⚡ EV Highway Hub</button>
+                <button class="query-chip" onclick="runQuickQuery('High median income retail with low competitor density')">🛒 Low-Comp Retail</button>
+                <button class="query-chip" onclick="runQuickQuery('Large warehouse logistics site near highway corridors')">🏭 Logistics Hub</button>
+                <button class="query-chip" onclick="runQuickQuery('Optimal solar parcel outside flood hazard zones')">☀️ Solar Array</button>
+            </div>
+        </div>
+
+        <!-- Right Controls -->
+        <div class="header-controls">
+            <div class="select-pill" style="border-color: rgba(56, 189, 248, 0.35);">
+                <label><i class="fa-solid fa-location-dot" style="color:var(--cyan);"></i> City:</label>
+                <select id="citySelector" onchange="jumpToCity(this.value)">
+                    <option value="bengaluru" selected>🇮🇳 Bengaluru</option>
+                    <option value="mumbai">🇮🇳 Mumbai</option>
+                    <option value="delhi">🇮🇳 Delhi-NCR</option>
+                    <option value="hyderabad">🇮🇳 Hyderabad</option>
+                    <option value="pune">🇮🇳 Pune</option>
+                    <option value="chennai">🇮🇳 Chennai</option>
+                </select>
+            </div>
+            <div class="select-pill">
+                <label>Vertical:</label>
+                <select id="presetSelector" onchange="changePresetProfile()">
+                    <option value="ev_charging">⚡ EV Charging</option>
+                    <option value="retail_store">🛒 Retail</option>
+                    <option value="warehouse_logistics">🏭 Logistics</option>
+                    <option value="telecom_tower">📡 Telecom 5G</option>
+                    <option value="solar_farm">☀️ Solar Farm</option>
+                </select>
+            </div>
+            <button class="btn-ghost" onclick="openUploadModal()">
+                <i class="fa-solid fa-cloud-arrow-up" style="color:var(--blue);"></i> Ingest Layer
+            </button>
+            <button class="btn-ghost" onclick="exportData('csv')">
+                <i class="fa-solid fa-download" style="color:var(--emerald);"></i> Export CSV
+            </button>
+            <button class="btn-ghost" onclick="exportData('geojson')">
+                <i class="fa-solid fa-file-code" style="color:var(--cyan);"></i> Export GeoJSON
+            </button>
+            <div id="headerProfileBtn" class="header-profile-btn" title="View Account Profile & History">
+                <img id="headerUserAvatar" class="header-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=guest" alt="User">
+                <span id="headerUserName" class="header-user-name">Sign In</span>
+                <i class="fa-solid fa-chevron-down" style="font-size:10px; color:var(--cyan);"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════
+         KPI BAR
+    ══════════════════════════════════════════ -->
+    <div id="kpi-bar">
+        <div style="display:flex; align-items:center; gap:20px;">
+            <div class="kpi-item">
+                <span class="kpi-label">Candidates:</span>
+                <span id="kpiCandidateCount" class="kpi-value blue">12 Parcels</span>
+            </div>
+            <div class="kpi-item">
+                <span class="kpi-label">Avg Readiness:</span>
+                <span id="kpiAvgScore" class="kpi-value cyan">-- / 100</span>
+            </div>
+            <div class="kpi-item">
+                <span class="kpi-label">Top Rated:</span>
+                <span id="kpiTopSite" class="kpi-value emerald">Analyzing…</span>
+            </div>
+        </div>
+
+        <div class="kpi-dots">
+            <span class="kpi-dot" style="color:var(--emerald);">
+                <i class="fa-solid fa-fire" style="font-size:11px;"></i>
+                <strong id="kpiHotspotCount">--</strong> Hot-Spots
+            </span>
+            <span style="color:var(--text-muted);">·</span>
+            <span class="kpi-dot" style="color:var(--purple);">
+                <i class="fa-solid fa-gem" style="font-size:11px;"></i>
+                <strong id="kpiUnderservedCount">--</strong> Underserved
+            </span>
+            <span style="color:var(--text-muted);">·</span>
+            <span class="kpi-dot" style="color:var(--rose);">
+                <i class="fa-solid fa-snowflake" style="font-size:11px;"></i>
+                <strong id="kpiColdspotCount">--</strong> Cold-Spots
+            </span>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         MAIN LAYOUT
+    ══════════════════════════════════════════ -->
+    <div id="main-layout" style="flex:1; display:flex; overflow:hidden; position:relative;">
+
+        <!-- ── Left Sidebar ── -->
+        <aside id="sidebar">
+
+            <!-- Tabs -->
+            <div class="sidebar-tabs" style="grid-template-columns: repeat(5,1fr);">
+                <button class="sidebar-tab active" id="tab-readiness" onclick="switchTab('readiness')">
+                    <i class="fa-solid fa-chart-bar"></i> Readiness
+                </button>
+                <button class="sidebar-tab" id="tab-layers" onclick="switchTab('layers')">
+                    <i class="fa-solid fa-layer-group"></i> Layers
+                </button>
+                <button class="sidebar-tab" id="tab-weights" onclick="switchTab('weights')">
+                    <i class="fa-solid fa-sliders"></i> Weights
+                </button>
+                <button class="sidebar-tab" id="tab-analysis" onclick="switchTab('analysis')">
+                    <i class="fa-solid fa-hexagon-nodes"></i> Spatial
+                </button>
+                <button class="sidebar-tab" id="tab-isochrone" onclick="switchTab('isochrone')">
+                    <i class="fa-solid fa-route"></i> Reach
+                </button>
+            </div>
+
+            <!-- Panel Body -->
+            <div class="sidebar-body">
+
+                <!-- ── READINESS PANEL ── -->
+                <div id="panel-readiness" class="panel active">
+
+                    <!-- Place Search (autocomplete) -->
+                    <div id="placeSearchWrapper" style="margin-bottom: 12px; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--radius-md); position:relative;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:7px;">
+                            <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted);">
+                                <i class="fa-solid fa-magnifying-glass-location" style="color:var(--cyan); margin-right:4px;"></i> Search Place
+                            </span>
+                            <span id="placeSearchCount" style="font-size:10px; color:var(--amber); font-weight:600;">800+ Places</span>
+                        </div>
+                        <div style="position:relative;">
+                            <i class="fa-solid fa-search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:11px; pointer-events:none;"></i>
+                            <input
+                                id="placeSearchInput"
+                                type="text"
+                                placeholder="Type city, district, area, highway…"
+                                autocomplete="off"
+                                class="form-input"
+                                style="padding:8px 10px 8px 30px; font-size:12px; width:100%;"
+                                oninput="handlePlaceSearch(this.value)"
+                                onkeydown="handlePlaceSearchKey(event)"
+                                onfocus="handlePlaceSearch(this.value)"
+                            />
+                            <button id="placeSearchClear" onclick="clearPlaceSearch()" title="Clear" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; padding:2px 4px;">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <!-- Autocomplete Dropdown -->
+                        <div id="placeSearchDropdown" class="place-search-dropdown" style="display:none;"></div>
+                    </div>
+
+                    <!-- Prompt to click -->
+                    <div id="readiness-prompt" class="readiness-prompt-card" style="display:flex;">
+                        <div class="readiness-prompt-icon pulse-glow"><i class="fa-solid fa-location-crosshairs"></i></div>
+                        <div class="readiness-prompt-title">Click Any Location on the Map</div>
+                        <div class="readiness-prompt-sub">Click anywhere across India — cities, highways, industrial corridors, or rural areas — to instantly analyze site readiness with our AI spatial engine</div>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:12px;">
+                            <span class="prompt-chip" onclick="jumpToAndInspect(28.6139,77.2090,'Delhi CP')">🏛️ Delhi</span>
+                            <span class="prompt-chip" onclick="jumpToAndInspect(19.0662,72.8683,'Mumbai BKC')">🏙️ Mumbai</span>
+                            <span class="prompt-chip" onclick="jumpToAndInspect(17.4435,78.3772,'HITEC City')">💻 Hyderabad</span>
+                            <span class="prompt-chip" onclick="jumpToAndInspect(18.5913,73.7389,'Hinjewadi')">🚗 Pune</span>
+                            <span class="prompt-chip" onclick="jumpToAndInspect(13.0827,80.2707,'Chennai OMR')">🏗️ Chennai</span>
+                        </div>
+                    </div>
+
+                    <!-- Score Result (hidden until click) -->
+                    <div id="readiness-result" style="display:none;">
+
+                        <!-- State Info Card -->
+                        <div class="state-info-card" id="stateInfoCard">
+                            <div class="state-info-header">
+                                <div class="state-flag-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                                <div>
+                                    <div class="state-name" id="stateName">—</div>
+                                    <div class="state-region" id="stateRegion">—</div>
+                                </div>
+                                <div class="state-score-badge" id="stateScoreBadge">—</div>
+                            </div>
+                            <div class="state-stats-grid">
+                                <div class="state-stat"><div class="state-stat-val" id="statePop">—</div><div class="state-stat-lbl">Population</div></div>
+                                <div class="state-stat"><div class="state-stat-val" id="stateGDP">—</div><div class="state-stat-lbl">GDP (₹L Cr)</div></div>
+                                <div class="state-stat"><div class="state-stat-val" id="stateArea">—</div><div class="state-stat-lbl">Area (km²)</div></div>
+                                <div class="state-stat"><div class="state-stat-val" id="stateUrban">—</div><div class="state-stat-lbl">Urban %</div></div>
+                            </div>
+                            <div class="state-tags" id="stateTags"></div>
+                        </div>
+
+                        <!-- Score Banner -->
+                        <div class="readiness-score-strip" id="readinessScoreStrip">
+                            <div>
+                                <div class="rs-label">Site Readiness Score</div>
+                                <div class="rs-score" id="lsScore">—</div>
+                            </div>
+                            <div class="rs-verdict" id="lsVerdict">—</div>
+                        </div>
+
+                        <!-- Deterministic Explanation -->
+                        <div class="explanation-card">
+                            <div class="explanation-badge"><i class="fa-solid fa-flask-vial"></i> DETERMINISTIC TRACEABLE EXPLANATION</div>
+                            <p class="explanation-text" id="lsExplanation">—</p>
+                        </div>
+
+                        <!-- Factor Score Contributions -->
+                        <div class="factor-contributions-panel">
+                            <div class="fc-header">
+                                <span class="fc-title">FACTOR SCORE CONTRIBUTIONS</span>
+                                <span class="fc-count" id="fcCount">8</span>
+                            </div>
+                            <div id="factorBarsLeft"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ── LAYERS PANEL ── -->
+                <div id="panel-layers" class="panel">
+                    <div class="panel-section">
+                        <div class="section-title">
+                            Geospatial Data Layers
+                            <span class="section-badge">6 Active</span>
+                        </div>
+
+                        <!-- Demographics -->
+                        <div class="layer-card">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:#C084FC;">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-demographics" checked onchange="toggleLayerVisibility('demographics')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-users"></i> Demographics &amp; Income
+                                </label>
+                                <span class="layer-count" id="count-demographics">Tracts</span>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px; padding-left:38px;">Pop density, median income, age 18-35 distribution</div>
+                            <div class="opacity-row" style="margin-top:6px;">
+                                <span>Opacity</span>
+                                <input type="range" min="0" max="1" step="0.05" value="0.45" oninput="changeLayerOpacity('demographics', this.value)" style="flex:1;">
+                            </div>
+                        </div>
+
+                        <!-- Transportation -->
+                        <div class="layer-card">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:#60A5FA;">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-transportation" checked onchange="toggleLayerVisibility('transportation')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-road"></i> Highway Corridors &amp; Transit
+                                </label>
+                                <span class="layer-count" id="count-transportation">Roads</span>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px; padding-left:38px;">Highways, Metro terminals, traffic AADT, road density</div>
+                            <div class="opacity-row" style="margin-top:6px;">
+                                <span>Opacity</span>
+                                <input type="range" min="0" max="1" step="0.05" value="0.85" oninput="changeLayerOpacity('transportation', this.value)" style="flex:1;">
+                            </div>
+                        </div>
+
+                        <!-- POIs -->
+                        <div class="layer-card">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:#FCD34D;">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-pois" checked onchange="toggleLayerVisibility('pois')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-store"></i> POIs, Anchors &amp; Competitors
+                                </label>
+                                <span class="layer-count" id="count-pois">POIs</span>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px; padding-left:38px;">Competitors, anchor tech parks, utility substations</div>
+                        </div>
+
+                        <!-- Zoning & Building Footprints -->
+                        <div class="layer-card">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:#34D399;">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-zoning" checked onchange="toggleLayerVisibility('zoning')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-building"></i> Zoning &amp; Building Footprints
+                                </label>
+                                <span class="layer-count" id="count-zoning">Zones</span>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px; padding-left:38px;">Commercial, industrial, residential, building structures &amp; FAR</div>
+                            <div class="opacity-row" style="margin-top:6px;">
+                                <span>Opacity</span>
+                                <input type="range" min="0" max="1" step="0.05" value="0.3" oninput="changeLayerOpacity('zoning', this.value)" style="flex:1;">
+                            </div>
+                        </div>
+
+                        <!-- Environmental & Risk -->
+                        <div class="layer-card">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:#FB7185;">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-environmental" checked onchange="toggleLayerVisibility('environmental')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Flood, Earthquake &amp; AQI Risk
+                                </label>
+                                <span class="layer-count" id="count-environmental">Zones</span>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px; padding-left:38px;">100-Yr flood zones, BIS seismic hazard, CPCB air quality stations</div>
+                            <div class="opacity-row" style="margin-top:6px;">
+                                <span>Opacity</span>
+                                <input type="range" min="0" max="1" step="0.05" value="0.4" oninput="changeLayerOpacity('environmental', this.value)" style="flex:1;">
+                            </div>
+                        </div>
+
+                        <!-- Candidate Sites -->
+                        <div class="layer-card" style="border-color:rgba(34,211,238,0.25); background:rgba(34,211,238,0.04);">
+                            <div class="layer-row">
+                                <label class="layer-label" style="color:var(--cyan);">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="layer-candidate_sites" checked onchange="toggleLayerVisibility('candidate_sites')">
+                                        <div class="toggle-track"></div>
+                                    </label>
+                                    <i class="fa-solid fa-location-dot"></i> Candidate Development Sites
+                                </label>
+                                <span class="layer-count" id="count-candidate_sites" style="color:var(--cyan); font-weight:700;">25 Sites</span>
+                            </div>
+                            <div style="font-size:10.5px; color:rgba(34,211,238,0.7); margin-top:2px; padding-left:38px;">Evaluated commercial land parcels across the metropolitan area</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── WEIGHTS PANEL ── -->
+                <div id="panel-weights" class="panel">
+                    <div class="panel-section">
+                        <div class="section-title">Scoring Model &amp; Decay</div>
+
+                        <!-- Decay Function -->
+                        <div class="feature-card" style="margin-bottom:12px;">
+                            <div class="feature-card-title">
+                                <i class="fa-solid fa-wave-square" style="color:var(--cyan);"></i>
+                                Distance Decay Function
+                            </div>
+                            <select id="decayFunctionSelector" class="decay-select">
+                                <option value="exponential">Exponential (e^−αd) — Recommended</option>
+                                <option value="gaussian">Gaussian Bell-Curve (e^−(d/σ)²)</option>
+                                <option value="inverse_distance">Inverse Distance (1/(1+βd))</option>
+                            </select>
+                        </div>
+
+                        <!-- Hard Constraint -->
+                        <div class="feature-card" style="margin-bottom:16px;">
+                            <div class="constraint-row">
+                                <span>100-Year Flood Zone Rule</span>
+                                <label class="toggle">
+                                    <input type="checkbox" id="hardConstraintToggle" checked>
+                                    <div class="toggle-track"></div>
+                                </label>
+                            </div>
+                            <div class="constraint-hint">
+                                On: Hard disqualification (score = 0) &nbsp;·&nbsp; Off: −35 pt penalty
+                            </div>
+                        </div>
+
+                        <!-- Weight Sliders -->
+                        <div class="feature-card">
+                            <div class="feature-card-title" style="margin-bottom:14px;">
+                                <i class="fa-solid fa-sliders" style="color:var(--blue);"></i>
+                                Factor Weights
+                            </div>
+
+                            <div class="weight-item">
+                                <div class="weight-header">
+                                    <span style="color:#C084FC;">Demographics &amp; Income</span>
+                                    <span id="val-demographics" class="weight-value">25%</span>
+                                </div>
+                                <input type="range" id="weight-demographics" min="0" max="100" value="25" oninput="updateWeightDisplay('demographics', this.value)">
+                            </div>
+
+                            <div class="weight-item">
+                                <div class="weight-header">
+                                    <span style="color:#60A5FA;">Highway Accessibility</span>
+                                    <span id="val-transportation" class="weight-value">30%</span>
+                                </div>
+                                <input type="range" id="weight-transportation" min="0" max="100" value="30" oninput="updateWeightDisplay('transportation', this.value)">
+                            </div>
+
+                            <div class="weight-item">
+                                <div class="weight-header">
+                                    <span style="color:#FCD34D;">Anchor Pull</span>
+                                    <span id="val-anchor_attraction" class="weight-value">20%</span>
+                                </div>
+                                <input type="range" id="weight-anchor_attraction" min="0" max="100" value="20" oninput="updateWeightDisplay('anchor_attraction', this.value)">
+                            </div>
+
+                            <div class="weight-item">
+                                <div class="weight-header">
+                                    <span style="color:#FB7185;">Competitor Low-Saturation</span>
+                                    <span id="val-competitor_penalty" class="weight-value">15%</span>
+                                </div>
+                                <input type="range" id="weight-competitor_penalty" min="0" max="100" value="15" oninput="updateWeightDisplay('competitor_penalty', this.value)">
+                            </div>
+
+                            <div class="weight-item" style="margin-bottom:0;">
+                                <div class="weight-header">
+                                    <span style="color:#34D399;">Zoning Suitability</span>
+                                    <span id="val-zoning_suitability" class="weight-value">10%</span>
+                                </div>
+                                <input type="range" id="weight-zoning_suitability" min="0" max="100" value="10" oninput="updateWeightDisplay('zoning_suitability', this.value)">
+                            </div>
+                        </div>
+
+                        <button class="btn-full btn-gradient" style="margin-top:14px;" onclick="recalculateGridScores()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Recalculate Scoring Engine
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── SPATIAL ANALYSIS PANEL ── -->
+                <div id="panel-analysis" class="panel">
+                    <div class="panel-section">
+                        <div class="section-title">Spatial Clustering &amp; Hotspots</div>
+
+                        <!-- H3 + Gi* Toggles -->
+                        <div class="feature-card" style="margin-bottom:10px;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                <span style="font-size:12px; font-weight:600; color:var(--text-secondary);">
+                                    <i class="fa-solid fa-hexagon" style="color:var(--blue); margin-right:6px;"></i>
+                                    Uber H3 Hex Grid (Res 8)
+                                </span>
+                                <label class="toggle">
+                                    <input type="checkbox" id="toggle-h3-hex" onchange="toggleH3HexGrid(this.checked)">
+                                    <div class="toggle-track"></div>
+                                </label>
+                            </div>
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <span style="font-size:12px; font-weight:600; color:var(--text-secondary);">
+                                    <i class="fa-solid fa-fire" style="color:var(--emerald); margin-right:6px;"></i>
+                                    Getis-Ord Gi* Hot-Spots
+                                </span>
+                                <label class="toggle">
+                                    <input type="checkbox" id="toggle-gi-star" checked onchange="toggleGiStarHotspots(this.checked)">
+                                    <div class="toggle-track"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Grid Filter -->
+                        <div class="feature-card" style="margin-bottom:10px;">
+                            <div class="feature-card-title">
+                                <i class="fa-solid fa-filter" style="color:var(--blue);"></i>
+                                Spatial Grid Filter
+                            </div>
+                            <div class="filter-grid">
+                                <button class="filter-btn filter-btn-all" onclick="filterH3Grid('all')">All Hexagons</button>
+                                <button class="filter-btn filter-btn-hot" onclick="filterH3Grid('hotspots')">🔥 Hot-Spots</button>
+                                <button class="filter-btn filter-btn-under" onclick="filterH3Grid('underserved')">💎 Underserved</button>
+                                <button class="filter-btn filter-btn-cold" onclick="filterH3Grid('coldspots')">❄️ Cold-Spots</button>
+                            </div>
+                        </div>
+
+                        <!-- DBSCAN -->
+                        <div class="feature-card" style="margin-bottom:10px;">
+                            <div class="feature-card-title">
+                                <i class="fa-solid fa-diagram-project" style="color:var(--amber);"></i>
+                                DBSCAN Density Clustering
+                            </div>
+                            <div class="inline-input" style="margin-bottom:10px;">
+                                <span>Epsilon (km):</span>
+                                <input type="number" id="dbscan-eps" value="1.5" step="0.5" class="number-input">
+                            </div>
+                            <button class="btn-full btn-outline" onclick="runDBSCANClustering()">
+                                <i class="fa-solid fa-diagram-project" style="color:var(--amber);"></i> Compute DBSCAN Clusters
+                            </button>
+                        </div>
+
+                        <!-- Polygon Search -->
+                        <div class="feature-card">
+                            <div class="feature-card-title">
+                                <i class="fa-solid fa-draw-polygon" style="color:var(--purple);"></i>
+                                Custom Search Polygon
+                            </div>
+                            <div class="feature-card-desc">Draw a boundary on the map to rank candidate sites inside.</div>
+                            <button class="btn-full btn-indigo" onclick="activatePolygonDrawTool()">
+                                <i class="fa-solid fa-draw-polygon"></i> Draw Search Polygon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ISOCHRONE PANEL ── -->
+                <div id="panel-isochrone" class="panel">
+                    <div class="panel-section">
+                        <div class="section-title">Catchment Reach &amp; Routing</div>
+
+                        <div class="feature-card" style="margin-bottom:10px;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                                <span style="font-size:12px; font-weight:600; color:var(--text-secondary);">Travel Mode</span>
+                                <div class="mode-toggle">
+                                    <button class="mode-btn active" id="mode-drive" onclick="setIsochroneMode('drive')">Drive</button>
+                                    <button class="mode-btn" id="mode-walk" onclick="setIsochroneMode('walk')">Walk</button>
+                                </div>
+                            </div>
+                            <div class="feature-card-desc" style="margin-bottom:0;">
+                                Click any candidate parcel to compute 10m, 20m, 30m accessibility bounds.
+                            </div>
+                        </div>
+
+                        <div id="isochroneMetricsContainer">
+                            <p style="font-size:11px; color:var(--text-muted); font-style:italic; text-align:center; padding:16px 0;">
+                                Select a candidate parcel or click the map to compute catchment demographics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /sidebar-body -->
+
+            <!-- Sidebar Footer -->
+            <div id="sidebar-footer">
+                <span class="coords-display">
+                    GPS: <strong id="cursorCoords">12.972° N, 77.595° E</strong>
+                </span>
+                <span class="status-dot">
+                    <i class="fa-solid fa-circle"></i> Engine Active
+                </span>
+            </div>
+
+            <!-- ── Left Sidebar Profile Widget & Dropdown ── -->
+            <div id="leftProfileWrapper" style="display:none;">
+                <!-- Dropdown menu (pops upward) -->
+                <div id="leftProfileDropdown" class="left-profile-dropdown">
+                    <!-- Mini user card at top of dropdown -->
+                    <div class="lpd-user-card">
+                        <img id="lpdAvatarLg" class="lpd-avatar-lg" src="" alt="Avatar">
+                        <div style="min-width:0;">
+                            <div id="lpdUserName" class="lpd-user-name">Loading…</div>
+                            <div id="lpdUserEmail" class="lpd-user-email">—</div>
+                        </div>
+                    </div>
+
+                    <div class="lpd-menu">
+                        <!-- Home -->
+                        <button class="lpd-item" onclick="ProfileMenu.goHome()">
+                            <span class="lpd-icon lpd-icon-home"><i class="fa-solid fa-house"></i></span>
+                            <span>Home</span>
+                        </button>
+
+                        <div class="lpd-divider"></div>
+
+                        <!-- Account Details -->
+                        <button class="lpd-item" onclick="ProfileMenu.openAccountDetails()">
+                            <span class="lpd-icon lpd-icon-account"><i class="fa-solid fa-id-card"></i></span>
+                            <span>Account Details</span>
+                        </button>
+
+                        <!-- Favourites -->
+                        <button class="lpd-item" onclick="ProfileMenu.openFavourites()">
+                            <span class="lpd-icon lpd-icon-favs"><i class="fa-solid fa-star"></i></span>
+                            <span>Favourites</span>
+                            <span id="lpdFavCount" class="lpd-badge">0</span>
+                        </button>
+
+                        <!-- Change Password -->
+                        <button class="lpd-item" onclick="ProfileMenu.openChangePassword()">
+                            <span class="lpd-icon lpd-icon-pass"><i class="fa-solid fa-key"></i></span>
+                            <span>Change Password</span>
+                        </button>
+
+                        <div class="lpd-divider"></div>
+
+                        <!-- Logout -->
+                        <button class="lpd-item danger" onclick="ProfileMenu.logout()">
+                            <span class="lpd-icon lpd-icon-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- The visible trigger button -->
+                <button id="leftProfileTrigger" class="left-profile-trigger" onclick="ProfileMenu.toggleDropdown()" title="Profile Menu">
+                    <img id="leftProfileAvatar" class="left-profile-avatar" src="" alt="Profile">
+                    <div class="left-profile-info">
+                        <div id="leftProfileName" class="left-profile-name">My Profile</div>
+                        <div id="leftProfileRole" class="left-profile-role">Analyst</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-up left-profile-chevron"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ── Map Area ── -->
+        <main id="map-wrapper">
+            <div id="map"></div>
+
+            <!-- Basemap Switcher -->
+            <div class="map-overlay" id="basemap-switcher">
+                <button class="bm-btn" id="bm-dark" onclick="setBaseMap('dark')">Dark</button>
+                <button class="bm-btn" id="bm-satellite" onclick="setBaseMap('satellite')">Satellite</button>
+                <button class="bm-btn active" id="bm-streets" onclick="setBaseMap('streets')">Streets</button>
+            </div>
+
+            <!-- Compare Bar -->
+            <div class="map-overlay" id="compare-bar" id="compareFloatingBar">
+                <div class="pulse-dot"></div>
+                <span style="font-size:12px; font-weight:600; color:white;">Pinboard:</span>
+                <span id="compareCountBadge" style="font-size:11px; font-weight:700; color:var(--cyan); background:rgba(34,211,238,0.1); padding:2px 9px; border-radius:6px;">0 Sites</span>
+                <button class="btn-primary" style="padding:6px 12px; font-size:11px;" onclick="openComparisonModal()">
+                    <i class="fa-solid fa-code-compare"></i> Compare
+                </button>
+                <button onclick="clearComparisonPinboard()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:4px 6px; font-size:12px; transition:var(--transition);"
+                    onmouseover="this.style.color='var(--rose)'" onmouseout="this.style.color='var(--text-muted)'">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+
+            <!-- Map Legend -->
+            <div class="map-overlay" id="map-legend">
+                <div class="legend-title">
+                    <i class="fa-solid fa-layer-group" style="color:var(--blue);"></i>
+                    Map Legend
+                </div>
+                <div class="legend-grid">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#10B981; box-shadow:0 0 6px rgba(16,185,129,0.5);"></div>
+                        <span>Hot-Spot</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#F43F5E;"></div>
+                        <span>Cold-Spot</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-sq" style="background:rgba(167,139,250,0.4); border:1px solid #A78BFA;"></div>
+                        <span>Underserved</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-sq" style="background:rgba(244,63,94,0.3); border:1px solid #F43F5E;"></div>
+                        <span>Flood Zone</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#22D3EE; border:2px solid white; box-shadow:0 0 6px rgba(34,211,238,0.5);"></div>
+                        <span>Candidate</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#F59E0B;"></div>
+                        <span>POI / Competitor</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ── Right Inspector Drawer ── -->
+        <div id="siteInspectorDrawer" style="display:none;"><!-- legacy compat --></div>
+        <div id="site-inspector">
+            <div class="inspector-header">
+                <div style="flex:1; min-width:0;">
+                    <div class="inspector-super-title">
+                        <i class="fa-solid fa-chart-radar text-cyan"></i>
+                        <span>Site Diagnostic &amp; Area Intelligence</span>
+                    </div>
+                    <div id="inspectorSiteName" class="inspector-main-title">Click Any Site on Map</div>
+                    <div class="inspector-header-tags">
+                        <span id="inspectorAreaTag" class="inspector-tag-pill"><i class="fa-solid fa-map-pin"></i> Select Location</span>
+                        <span id="inspectorStateRegionTag" class="inspector-tag-pill"><i class="fa-solid fa-landmark"></i> India</span>
+                        <span id="inspectorCoordsDisplay" class="inspector-tag-pill"><i class="fa-solid fa-crosshairs"></i> 22.5000°N, 78.9000°E</span>
+                    </div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:2px; flex-shrink:0;">
+                    <button class="icon-btn" id="inspectorPinBtn" onclick="togglePinCurrentSite()" title="Pin to comparison board">
+                        <i class="fa-solid fa-thumbtack"></i>
+                    </button>
+                    <button class="icon-btn" onclick="closeSiteInspector()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="inspector-body">
+                <!-- 1. Executive Score & Verdict Card -->
+                <div id="inspectorScoreBanner" class="retouched-score-card">
+                    <div class="rsc-top-row">
+                        <div style="flex:1; min-width:0;">
+                            <div class="rsc-label">Site Readiness Evaluation</div>
+                            <div id="inspectorVerdict" class="rsc-verdict">Ready for Evaluation</div>
+                        </div>
+                        <div class="rsc-score-badge">
+                            <span id="inspectorScoreValue" class="rsc-score-number">--</span>
+                            <span class="rsc-score-max">/100</span>
+                        </div>
+                    </div>
+                    <div id="inspectorScoreStatusDesc" class="rsc-desc">Click any location across India on the map to evaluate site readiness, demographics, and corridor connectivity.</div>
+                </div>
+
+                <!-- 2. Thematic Area Details (Arranged in 4 clean, spacious cards) -->
+                <div class="retouched-details-container">
+                    <!-- Category 1: Connectivity & Highways -->
+                    <div class="rd-card">
+                        <div class="rd-card-header">
+                            <i class="fa-solid fa-road text-blue"></i>
+                            <span>Highway &amp; Transit Connectivity</span>
+                        </div>
+                        <div class="rd-row">
+                            <span class="rd-field-title">Nearest Highway Corridor</span>
+                            <span id="detHighwayName" class="rd-field-value">National Highway Corridor</span>
+                        </div>
+                        <div class="rd-sub-row" id="detHighwaySub">0.0 km away · 0 AADT</div>
+
+                        <div class="rd-divider"></div>
+
+                        <div class="rd-row">
+                            <span class="rd-field-title">Mass Transit Access</span>
+                            <span id="detTransitName" class="rd-field-value">Transit Interchange</span>
+                        </div>
+                        <div class="rd-sub-row" id="detTransitSub">0.0 km access</div>
+                    </div>
+
+                    <!-- Category 2: Demographics & Economy -->
+                    <div class="rd-card">
+                        <div class="rd-card-header">
+                            <i class="fa-solid fa-users text-purple"></i>
+                            <span>Demographics &amp; Economic Profile</span>
+                        </div>
+                        <div class="rd-row">
+                            <span class="rd-field-title">Population Density</span>
+                            <span id="detPopDensity" class="rd-field-value highlight-val">0 /km²</span>
+                        </div>
+                        <div class="rd-sub-row" id="detPopDensitySub">Demographic concentration</div>
+
+                        <div class="rd-divider"></div>
+
+                        <div class="rd-row">
+                            <span class="rd-field-title">Median Annual Income</span>
+                            <span id="detIncomeVal" class="rd-field-value">₹0 /yr</span>
+                        </div>
+                        <div class="rd-sub-row" id="detIncomeSub">Household income tier</div>
+                    </div>
+
+                    <!-- Category 3: Geo-Environmental & Hazards -->
+                    <div class="rd-card">
+                        <div class="rd-card-header">
+                            <i class="fa-solid fa-shield-halved text-amber"></i>
+                            <span>Environmental &amp; Natural Hazard Profile</span>
+                        </div>
+                        <div class="rd-grid-2col">
+                            <div class="rd-col-item">
+                                <span class="rd-field-title">Air Quality (AQI)</span>
+                                <div id="detAQIVal" class="rd-field-value" style="color:var(--emerald);">AQI --</div>
+                                <div id="detAQISub" class="rd-sub-row">Atmospheric index</div>
+                            </div>
+                            <div class="rd-col-item">
+                                <span class="rd-field-title">BIS Seismic Zone</span>
+                                <div id="detSeismicVal" class="rd-field-value">Zone II</div>
+                                <div id="detSeismicSub" class="rd-sub-row">Seismic intensity</div>
+                            </div>
+                        </div>
+
+                        <div class="rd-divider"></div>
+
+                        <div class="rd-row">
+                            <span class="rd-field-title">Flood / Submergence Risk</span>
+                            <span id="detFloodSub" class="rd-field-value">Low Floodplain Risk</span>
+                        </div>
+                    </div>
+
+                    <!-- Category 4: Zoning & Market Saturation -->
+                    <div class="rd-card">
+                        <div class="rd-card-header">
+                            <i class="fa-solid fa-city text-cyan"></i>
+                            <span>Zoning &amp; Commercial Saturation</span>
+                        </div>
+                        <div class="rd-row">
+                            <span class="rd-field-title">Permitted Land Use</span>
+                            <span id="detZoningVal" class="rd-field-value">Commercial / Mixed Use</span>
+                        </div>
+                        <div class="rd-sub-row" id="detZoningSub">0 competitors (2km) · 0 anchors (3km)</div>
+                    </div>
+                </div>
+
+                <!-- 3. Radar Chart -->
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <span>Factor Distribution</span>
+                        <span style="font-size:10px; color:var(--text-muted);">5-Dimensional Geospatial Model</span>
+                    </div>
+                    <div style="position:relative; height:180px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 4. Factor Breakdown Bars -->
+                <div class="chart-card" style="padding:14px 16px;">
+                    <div class="chart-title" style="margin-bottom:12px;">
+                        <span>Factor Breakdown &amp; Weighted Scores</span>
+                        <span style="font-size:10px; color:var(--text-muted);">0 - 100 Scale</span>
+                    </div>
+                    <div id="inspectorFactorBars"></div>
+                </div>
+
+                <!-- 5. OSRM Routing -->
+                <div class="route-card">
+                    <div class="route-card-title">
+                        <i class="fa-solid fa-route"></i>
+                        OSRM Turn-by-Turn Route
+                    </div>
+                    <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">
+                        Calculate real road distance &amp; travel time from this parcel:
+                    </p>
+                    <div class="route-btn-grid">
+                        <button class="route-btn" onclick="requestRouteToHub('highway')">
+                            <i class="fa-solid fa-road" style="color:var(--blue);"></i> To Highway
+                        </button>
+                        <button class="route-btn" onclick="requestRouteToHub('anchor')">
+                            <i class="fa-solid fa-store" style="color:var(--amber);"></i> To Anchor POI
+                        </button>
+                    </div>
+                    <div id="routeResultBox" style="display:none; margin-top:10px; padding:10px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; font-size:11px;"></div>
+                </div>
+
+                <!-- 6. AI Summary -->
+                <div class="ai-card">
+                    <div class="ai-card-title">
+                        <i class="fa-solid fa-brain"></i>
+                        AI Diagnostic Summary
+                    </div>
+                    <p id="inspectorAISummary" class="ai-summary-text"></p>
+
+                    <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:10px; display:flex; flex-direction:column; gap:10px;">
+                        <div class="driver-section">
+                            <div class="driver-section-title positive">Top Positive Drivers</div>
+                            <ul id="inspectorPositiveDrivers" class="driver-list positive"></ul>
+                        </div>
+                        <div class="driver-section">
+                            <div class="driver-section-title negative">Constraints &amp; Penalties</div>
+                            <ul id="inspectorPenaltyDrivers" class="driver-list negative"></ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- PDF Export -->
+                <button onclick="downloadPDFReport()" class="btn-full btn-emerald" style="margin-top:4px;">
+                    <i class="fa-solid fa-file-pdf"></i> Download Executive PDF Report
+                </button>
+            </div>
+        </div>
+
+    </div><!-- /main-layout -->
+
+
+    <!-- ══════════════════════════════════════════
+         COMPARISON MODAL
+    ══════════════════════════════════════════ -->
+    <div id="comparisonModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">
+                        <i class="fa-solid fa-code-compare" style="color:var(--cyan); margin-right:8px;"></i>
+                        Candidate Site Comparison Matrix
+                    </div>
+                    <div class="modal-subtitle">Head-to-Head Multi-Factor Scoring &amp; AI Decision Breakdown</div>
+                </div>
+                <button class="icon-btn" onclick="closeComparisonModal()" style="width:34px; height:34px; font-size:16px;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- AI Verdict -->
+                <div id="compareVerdictBanner" class="verdict-banner">
+                    <div class="verdict-winner">
+                        <i class="fa-solid fa-trophy" style="color:var(--amber);"></i>
+                        AI Winner Recommendation
+                        <span id="comparePresetBadge" style="background:rgba(255,255,255,0.06); color:var(--text-secondary); padding:2px 9px; border-radius:6px; font-size:10px; margin-left:6px;">EV Charging</span>
+                    </div>
+                    <div id="compareWinnerTitle" class="verdict-title">Evaluating comparison…</div>
+                    <div id="compareNarrative" class="verdict-text"></div>
+                </div>
+
+                <!-- Comparison Grid -->
+                <div style="display:grid; grid-template-columns:1fr 2fr; gap:16px;">
+                    <!-- Radar -->
+                    <div class="chart-card">
+                        <div class="chart-title">Head-to-Head Radar</div>
+                        <div style="position:relative; height:240px;">
+                            <canvas id="compareRadarCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="chart-card">
+                        <div class="chart-title">Factor Matrix</div>
+                        <div style="overflow-x:auto;">
+                            <table id="comparisonTable" class="comp-table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-ghost" onclick="closeComparisonModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         UPLOAD LAYER MODAL
+    ══════════════════════════════════════════ -->
+    <div id="uploadModal" class="modal-overlay">
+        <div class="modal-box" style="max-width:480px;">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">
+                        <i class="fa-solid fa-cloud-arrow-up" style="color:var(--blue); margin-right:8px;"></i>
+                        Ingest Geospatial Data Layer
+                    </div>
+                    <div class="modal-subtitle">GeoJSON · Shapefile (.zip) · CSV · WKT · GeoTIFF</div>
+                </div>
+                <button class="icon-btn" onclick="closeUploadModal()" style="width:34px; height:34px; font-size:16px;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadLayerForm" onsubmit="handleLayerUpload(event)">
+                    <div style="margin-bottom:14px;">
+                        <label class="form-label">Layer Display Name</label>
+                        <input type="text" id="uploadLayerName" required placeholder="e.g. Utility Power Infrastructure" class="form-input">
+                    </div>
+                    <div style="margin-bottom:14px;">
+                        <label class="form-label">Geospatial File</label>
+                        <input type="file" id="uploadLayerFile" required accept=".geojson,.json,.zip,.csv,.wkt,.tif,.tiff" class="form-input" style="padding:7px 12px;">
+                    </div>
+                    <button type="submit" class="btn-full btn-gradient">
+                        <i class="fa-solid fa-upload"></i> Ingest Layer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ══════════════════════════════════════════
+         FAVOURITES SIDE PANEL
+    ══════════════════════════════════════════ -->
+    <div id="favSidePanel" class="side-panel">
+        <div class="side-panel-backdrop" onclick="ProfileMenu.closePanel('favSidePanel')"></div>
+        <div class="side-panel-drawer">
+            <div class="side-panel-header">
+                <div class="side-panel-title">
+                    <i class="fa-solid fa-star" style="color:#fbbf24;"></i>
+                    Favourites
+                    <span id="favPanelCount" style="font-size:12px; color:#94a3b8; font-weight:500;">(0 places)</span>
+                </div>
+                <button class="side-panel-close" onclick="ProfileMenu.closePanel('favSidePanel')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="side-panel-body">
+                <div id="favListContainer">
+                    <div class="fav-empty">
+                        <i class="fa-solid fa-star"></i>
+                        <p style="font-size:14px; font-weight:600; color:#64748b; margin-bottom:6px;">No Favourites Yet</p>
+                        <p style="font-size:12px;">Pin sites from the map to build your favourites list.</p>
+                    </div>
+                </div>
+                <button class="fav-add-btn" onclick="ProfileMenu.promptAddFavourite()">
+                    <i class="fa-solid fa-plus"></i> Pin Current Location as Favourite
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ACCOUNT DETAILS SIDE PANEL
+    ══════════════════════════════════════════ -->
+    <div id="accountDetailsSidePanel" class="side-panel">
+        <div class="side-panel-backdrop" onclick="ProfileMenu.closePanel('accountDetailsSidePanel')"></div>
+        <div class="side-panel-drawer">
+            <div class="side-panel-header">
+                <div class="side-panel-title">
+                    <i class="fa-solid fa-id-card" style="color:#818cf8;"></i>
+                    Account Details
+                </div>
+                <button class="side-panel-close" onclick="ProfileMenu.closePanel('accountDetailsSidePanel')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="side-panel-body">
+                <!-- Profile Hero -->
+                <div style="text-align:center; padding:20px 0 24px;">
+                    <img id="accDetailAvatar" src="" alt="Avatar" style="width:72px; height:72px; border-radius:50%; border:2px solid #38bdf8; margin-bottom:12px; object-fit:cover;">
+                    <div id="accDetailName" style="font-size:18px; font-weight:800; color:#f1f5f9; margin-bottom:4px;"></div>
+                    <div id="accDetailRole" style="font-size:12.5px; color:#38bdf8; font-weight:600;"></div>
+                </div>
+
+                <!-- Stats row -->
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:22px;">
+                    <div style="background:rgba(30,41,59,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px; text-align:center;">
+                        <div id="adStatSites" style="font-size:20px; font-weight:800; color:#38bdf8;">—</div>
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:600; margin-top:2px;">Saved Sites</div>
+                    </div>
+                    <div style="background:rgba(30,41,59,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px; text-align:center;">
+                        <div id="adStatEvals" style="font-size:20px; font-weight:800; color:#818cf8;">—</div>
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:600; margin-top:2px;">Evaluations</div>
+                    </div>
+                    <div style="background:rgba(30,41,59,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px; text-align:center;">
+                        <div id="adStatExports" style="font-size:20px; font-weight:800; color:#34d399;">—</div>
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:600; margin-top:2px;">Exports</div>
+                    </div>
+                </div>
+
+                <!-- Info fields -->
+                <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+                    <div class="acc-field"><label>Email Address</label><div id="adEmail" class="val">—</div></div>
+                    <div class="acc-field"><label>Phone Number</label><div id="adPhone" class="val">—</div></div>
+                    <div class="acc-field"><label>Authentication Provider</label><div id="adProvider" class="val">—</div></div>
+                    <div class="acc-field"><label>Company / Organization</label><div id="adCompany" class="val">—</div></div>
+                    <div class="acc-field"><label>Bio / Focus Area</label><div id="adBio" class="val" style="font-size:12px; color:#94a3b8;">—</div></div>
+                    <div class="acc-field"><label>Member Since</label><div id="adCreated" class="val">—</div></div>
+                    <div class="acc-field"><label>Last Login</label><div id="adLastLogin" class="val">—</div></div>
+                </div>
+
+                <!-- Edit section -->
+                <div style="font-size:13px; font-weight:700; color:#cbd5e1; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-pen-to-square" style="color:#38bdf8;"></i> Edit Profile
+                </div>
+                <form id="adEditForm" onsubmit="ProfileMenu.saveProfile(event)">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                        <div><label class="cp-label">Name</label><input type="text" id="adEditName" class="cp-input" placeholder="Full Name"></div>
+                        <div><label class="cp-label">Phone</label><input type="tel" id="adEditPhone" class="cp-input" placeholder="+91 …"></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                        <div><label class="cp-label">Company</label><input type="text" id="adEditCompany" class="cp-input" placeholder="Organization"></div>
+                        <div><label class="cp-label">Role</label><input type="text" id="adEditRole" class="cp-input" placeholder="Job Title"></div>
+                    </div>
+                    <div style="margin-bottom:10px;"><label class="cp-label">Bio</label><input type="text" id="adEditBio" class="cp-input" placeholder="Focus area…"></div>
+                    <button type="submit" class="cp-submit-btn" style="background:linear-gradient(135deg,#2563eb,#0891b2);">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                    </button>
+                    <div id="adSaveAlert" class="cp-alert"></div>
+                </form>
+
+                <!-- Login history -->
+                <div style="font-size:13px; font-weight:700; color:#cbd5e1; text-transform:uppercase; letter-spacing:0.6px; margin:24px 0 12px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color:#34d399;"></i> Login History
+                </div>
+                <div style="border:1px solid rgba(255,255,255,0.06); border-radius:10px; overflow:hidden;">
+                    <table class="audit-table">
+                        <thead><tr><th>Method</th><th>Status</th><th>IP</th><th>When</th></tr></thead>
+                        <tbody id="adAuditBody"><tr><td colspan="4" style="text-align:center;color:#475569;">Loading…</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CHANGE PASSWORD SIDE PANEL
+    ══════════════════════════════════════════ -->
+    <div id="changePwSidePanel" class="side-panel">
+        <div class="side-panel-backdrop" onclick="ProfileMenu.closePanel('changePwSidePanel')"></div>
+        <div class="side-panel-drawer">
+            <div class="side-panel-header">
+                <div class="side-panel-title">
+                    <i class="fa-solid fa-key" style="color:#34d399;"></i>
+                    Change Password
+                </div>
+                <button class="side-panel-close" onclick="ProfileMenu.closePanel('changePwSidePanel')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="side-panel-body">
+                <div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); border-radius:10px; padding:12px 14px; margin-bottom:20px; font-size:12.5px; color:#94a3b8; line-height:1.5;">
+                    <i class="fa-solid fa-shield-halved" style="color:#34d399; margin-right:6px;"></i>
+                    Your new password is salted and hashed with PBKDF2-HMAC-SHA256 (100,000 iterations) before storage.
+                </div>
+
+                <form id="changePwForm" onsubmit="ProfileMenu.submitChangePassword(event)">
+                    <div class="cp-form-group">
+                        <label class="cp-label">Current Password</label>
+                        <input type="password" id="cpCurrentPw" class="cp-input" placeholder="Enter current password" required autocomplete="current-password">
+                    </div>
+                    <div class="cp-form-group">
+                        <label class="cp-label">New Password</label>
+                        <input type="password" id="cpNewPw" class="cp-input" placeholder="Minimum 8 characters" required autocomplete="new-password" oninput="ProfileMenu.updatePwStrength(this.value)">
+                        <div class="pw-strength-bar"><div id="pwStrengthFill" class="pw-strength-fill"></div></div>
+                        <div id="pwStrengthLabel" style="font-size:10.5px; color:#64748b; margin-top:4px;"></div>
+                    </div>
+                    <div class="cp-form-group">
+                        <label class="cp-label">Confirm New Password</label>
+                        <input type="password" id="cpConfirmPw" class="cp-input" placeholder="Re-enter new password" required autocomplete="new-password">
+                    </div>
+
+                    <button type="submit" class="cp-submit-btn">
+                        <i class="fa-solid fa-lock"></i> Update Password
+                    </button>
+
+                    <div id="cpAlert" class="cp-alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         AUTHENTICATION OVERLAY / ATTRACTIVE LOGIN MODAL
+    ══════════════════════════════════════════ -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-glow-orbit"></div>
+
+        <div class="auth-card">
+            <!-- Left Hero Showcase Pane -->
+            <div class="auth-hero-pane">
+                <div>
+                    <div class="auth-brand-badge">
+                        <i class="fa-solid fa-satellite"></i> Enterprise Spatial AI
+                    </div>
+                    <div class="auth-hero-title">
+                        Site Readiness <span>Intelligence</span>
+                    </div>
+                    <p class="auth-hero-desc">
+                        Multi-layer spatial analytics, Uber H3 hexagonal binning, Getis-Ord Gi* hotspot detection, and AI site scoring.
+                    </p>
+
+                    <div class="auth-features-list">
+                        <div class="auth-feature-item">
+                            <div class="auth-feature-icon icon-cyan"><i class="fa-solid fa-bolt"></i></div>
+                            <span><strong>Multi-Vertical Presets:</strong> EV Charging, Retail, Logistics & Solar</span>
+                        </div>
+                        <div class="auth-feature-item">
+                            <div class="auth-feature-icon icon-indigo"><i class="fa-solid fa-cube"></i></div>
+                            <span><strong>H3 Hexagonal Indexing:</strong> Continuous demand & infrastructure scoring</span>
+                        </div>
+                        <div class="auth-feature-item">
+                            <div class="auth-feature-icon icon-emerald"><i class="fa-solid fa-route"></i></div>
+                            <span><strong>Drive Catchments:</strong> 10-20-30 min real-time isochrone analytics</span>
+                        </div>
+                        <div class="auth-feature-item">
+                            <div class="auth-feature-icon icon-amber"><i class="fa-solid fa-brain"></i></div>
+                            <span><strong>AI Explanations:</strong> Multi-factor justifications & PDF reports</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-trust-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="auth-trust-text">
+                        <strong>Cryptographic Security:</strong> PBKDF2-HMAC-SHA256 salted hashing with localized persistent SQLite account storage.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Interactive Form Pane -->
+            <div class="auth-form-pane">
+                <div>
+                    <!-- Form Top Bar -->
+                    <div class="auth-header-row">
+                        <h2 id="authFormHeading" class="auth-heading">Welcome back</h2>
+                        <div class="auth-mode-toggle">
+                            <button type="button" id="modeSignInBtn" class="mode-btn active">Sign In</button>
+                            <button type="button" id="modeSignUpBtn" class="mode-btn">Register</button>
+                        </div>
+                    </div>
+
+                    <!-- Auth Method Tabs -->
+                    <div class="auth-methods-tabs">
+                        <button type="button" id="tabMethodEmail" class="method-tab active">
+                            <i class="fa-solid fa-envelope"></i> Email
+                        </button>
+                        <button type="button" id="tabMethodPhone" class="method-tab">
+                            <i class="fa-solid fa-mobile-screen"></i> Phone OTP
+                        </button>
+                        <button type="button" id="tabMethodGoogle" class="method-tab">
+                            <i class="fa-brands fa-google"></i> Google
+                        </button>
+                    </div>
+
+                    <!-- Alert Box -->
+                    <div id="authAlert" class="auth-alert"></div>
+
+                    <!-- Section 1: Email & Password Form -->
+                    <div id="authSectionEmail">
+                        <form id="authEmailForm">
+                            <!-- Registration Extra Fields -->
+                            <div id="signupExtraFields" style="display:none;">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="authNameInput" class="auth-input" placeholder="e.g. Dr. Alex Mercer">
+                                        <i class="fa-solid fa-user input-icon"></i>
+                                    </div>
+                                </div>
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Company / Organization</label>
+                                        <div class="input-with-icon">
+                                            <input type="text" id="authCompanyInput" class="auth-input" placeholder="e.g. Mobility Labs">
+                                            <i class="fa-solid fa-building input-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Professional Role</label>
+                                        <div class="input-with-icon">
+                                            <input type="text" id="authRoleInput" class="auth-input" placeholder="e.g. GIS Lead Analyst">
+                                            <i class="fa-solid fa-briefcase input-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mobile Number (Optional)</label>
+                                    <div class="input-with-icon">
+                                        <input type="tel" id="authRegPhoneInput" class="auth-input" placeholder="+91 98765 43210">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-with-icon">
+                                    <input type="email" id="authEmailInput" class="auth-input" placeholder="analyst@geosite.ai" value="analyst@geosite.ai" required autocomplete="email">
+                                    <i class="fa-solid fa-envelope input-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                    <label class="form-label" style="margin-bottom:0;">Password</label>
+                                    <span style="font-size:11px; color:#38bdf8; cursor:pointer;" onclick="alert('Demo analyst password is: Admin@123')">Forgot Password?</span>
+                                </div>
+                                <div class="input-with-icon">
+                                    <input type="password" id="authPasswordInput" class="auth-input" placeholder="••••••••" value="Admin@123" required autocomplete="current-password">
+                                    <i class="fa-solid fa-lock input-icon"></i>
+                                    <button type="button" class="pw-toggle-btn" data-target="authPasswordInput">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="emailSubmitBtn" class="auth-submit-btn">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                <span id="emailSubmitBtnText">Sign In to GeoSite</span>
+                            </button>
+                        </form>
+
+                        <button type="button" id="demoQuickLoginBtn" class="demo-quick-btn">
+                            <i class="fa-solid fa-bolt" style="color:#38bdf8;"></i> Instant Demo Login (Dr. Anya Sharma · Lead Analyst)
+                        </button>
+                        <button type="button" id="guestExploreBtn" onclick="AuthManager.loginAsGuest()" class="demo-quick-btn" style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.15); margin-top:8px; color:#94a3b8;">
+                            <i class="fa-solid fa-compass" style="color:#38bdf8;"></i> Continue as Guest Analyst (Explore All Features)
+                        </button>
+                    </div>
+
+                    <!-- Section 2: Phone OTP Form -->
+                    <div id="authSectionPhone" style="display:none;">
+                        <!-- Step 1: Input Phone -->
+                        <div id="phoneStepInput">
+                            <!-- User Name Card for Phone Login -->
+                            <div class="phone-name-card" style="background:rgba(56,189,248,0.07); border:1px solid rgba(56,189,248,0.25); border-radius:12px; padding:12px 14px; margin-bottom:14px;">
+                                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                                    <i class="fa-solid fa-user-tag" style="color:#38bdf8; font-size:13px;"></i>
+                                    <label class="form-label" style="margin-bottom:0; font-size:12px; font-weight:700; color:#f1f5f9;">Your Full Name</label>
+                                </div>
+                                <div class="input-with-icon">
+                                    <input type="text" id="phoneUserNameInput" class="auth-input" placeholder="e.g. Rahul Sharma" value="Rahul Sharma" style="background:rgba(15,23,42,0.85);">
+                                    <i class="fa-solid fa-user input-icon"></i>
+                                </div>
+                                <div style="font-size:11px; color:#94a3b8; margin-top:5px;">
+                                    Shown beside your profile icon and top navigation bar.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Mobile Number</label>
+                                <div class="phone-compound-input">
+                                    <select id="phoneCountryCode" class="country-select">
+                                        <option value="+91" selected>🇮🇳 +91</option>
+                                        <option value="+1">🇺🇸 +1</option>
+                                        <option value="+44">🇬🇧 +44</option>
+                                        <option value="+65">🇸🇬 +65</option>
+                                        <option value="+971">🇦🇪 +971</option>
+                                    </select>
+                                    <div class="input-with-icon" style="flex:1;">
+                                        <input type="tel" id="phoneInputNumber" class="auth-input" placeholder="98765 43210" value="98765 43210">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="font-size:12px; color:#94a3b8; line-height:1.5; margin-bottom:18px;">
+                                A secure 6-digit authentication PIN will be dispatched to your phone number. Instant verification simulation is active.
+                            </p>
+
+                            <button type="button" id="sendOtpBtn" class="auth-submit-btn" onclick="AuthManager.requestPhoneOtp()">
+                                <i class="fa-solid fa-paper-plane"></i> Dispatch OTP Code
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Verify 6-digit OTP -->
+                        <div id="phoneStepVerify" style="display:none;">
+                            <div style="font-size:12.5px; color:#cbd5e1; margin-bottom:10px;">
+                                Enter the 6-digit PIN sent to <strong id="otpSentTarget" style="color:#38bdf8;">+91 98765 43210</strong>
+                            </div>
+
+                            <form id="authPhoneForm">
+                                <div class="otp-digit-container">
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" autofocus>
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                                </div>
+
+                                <div class="otp-timer-row">
+                                    <span>Expires in: <strong id="otpTimerSeconds" style="color:#38bdf8;">60s</strong></span>
+                                    <button type="button" id="resendOtpBtn" class="resend-btn" disabled onclick="AuthManager.requestPhoneOtp()">Resend PIN</button>
+                                </div>
+
+                                <button type="submit" id="verifyOtpBtn" class="auth-submit-btn">
+                                    <i class="fa-solid fa-check-double"></i> Verify PIN & Enter
+                                </button>
+                            </form>
+
+                            <div style="text-align:center; margin-top:14px;">
+                                <a href="javascript:void(0)" onclick="AuthManager.backToPhoneInput()" style="font-size:12px; color:#94a3b8; text-decoration:none;">
+                                    <i class="fa-solid fa-arrow-left"></i> Change Phone Number
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Google SSO Form -->
+                    <div id="authSectionGoogle" style="display:none;">
+                        <div style="text-align:center; padding:15px 0 20px;">
+                            <div style="width:54px; height:54px; background:rgba(255,255,255,0.06); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px;">
+                                <svg class="google-icon-svg" style="width:28px; height:28px;" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                </svg>
+                            </div>
+                            <h3 style="font-size:16px; font-weight:700; color:#f8fafc; margin-bottom:6px;">Enterprise Google Workspace SSO</h3>
+                            <p style="font-size:12.5px; color:#94a3b8; max-width:320px; margin:0 auto 20px;">
+                                One-click secure sign-in with your Google organization account. No password required.
+                            </p>
+
+                            <button type="button" class="google-signin-btn" onclick="AuthManager.showGooglePicker()">
+                                <svg class="google-icon-svg" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                </svg>
+                                <span>Continue with Google</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:11px; color:#64748b; text-align:center; padding-top:16px;">
+                    Protected by GeoSite Shield · Terms of Service & Privacy Policy apply
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         GOOGLE ACCOUNT PICKER MODAL (SSO MOCKUP)
+    ══════════════════════════════════════════ -->
+    <div id="googlePickerModal" class="google-picker-modal">
+        <div class="google-picker-card">
+            <div class="google-picker-header">
+                <svg style="width:24px; height:24px;" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <div style="font-weight:600; font-size:15px;">Choose a Google Account</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <div class="google-picker-account" onclick="AuthManager.selectGoogleAccount({email: 'anya.sharma@geosite.ai', name: 'Dr. Anya Sharma', avatar_url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150'})">
+                    <div class="google-acc-avatar">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150" alt="Anya">
+                    </div>
+                    <div>
+                        <div style="font-weight:600; font-size:13.5px;">Dr. Anya Sharma</div>
+                        <div style="font-size:12px; color:#9aa0a6;">anya.sharma@geosite.ai</div>
+                    </div>
+                </div>
+
+                <div class="google-picker-account" onclick="AuthManager.selectGoogleAccount({email: 'alex.chen.spatial@gmail.com', name: 'Alex Chen', avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'})">
+                    <div class="google-acc-avatar">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex">
+                    </div>
+                    <div>
+                        <div style="font-weight:600; font-size:13.5px;">Alex Chen</div>
+                        <div style="font-size:12px; color:#9aa0a6;">alex.chen.spatial@gmail.com</div>
+                    </div>
+                </div>
+
+                <div class="google-picker-account" onclick="AuthManager.customGoogleLogin()">
+                    <div class="google-acc-avatar" style="background:#3c4043;">
+                        <i class="fa-solid fa-user-plus" style="font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight:600; font-size:13.5px;">Use another account</div>
+                        <div style="font-size:12px; color:#9aa0a6;">Sign in with custom Google email</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:20px; text-align:right;">
+                <button type="button" class="btn-ghost" onclick="AuthManager.hideGooglePicker()" style="border-radius:8px; padding:6px 14px; font-size:12px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ACCOUNT PROFILE & DATA DRAWER / MODAL
+    ══════════════════════════════════════════ -->
+    <div id="accountProfileModal" class="account-modal">
+        <div class="account-dialog">
+            <!-- Header -->
+            <div class="account-dialog-header">
+                <div class="acc-hero-row">
+                    <img id="accModalAvatar" class="acc-large-avatar" src="" alt="Avatar">
+                    <div>
+                        <h2 id="accModalName" style="font-size:20px; font-weight:800; color:#f8fafc; margin-bottom:4px;">Analyst Name</h2>
+                        <div id="accModalRole" style="font-size:13px; color:#38bdf8; font-weight:600;">Role & Company</div>
+                    </div>
+                </div>
+                <button type="button" id="closeAccountModalBtn" style="background:none; border:none; color:#94a3b8; font-size:20px; cursor:pointer;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="acc-dialog-body">
+                <!-- Statistics Grid -->
+                <div class="acc-stats-grid">
+                    <div class="acc-stat-card">
+                        <div id="accStatSavedSites" class="acc-stat-val">18</div>
+                        <div class="acc-stat-lbl">Saved Candidate Parcels</div>
+                    </div>
+                    <div class="acc-stat-card">
+                        <div id="accStatEvaluations" class="acc-stat-val">92</div>
+                        <div class="acc-stat-lbl">Spatial Site Evaluations</div>
+                    </div>
+                    <div class="acc-stat-card">
+                        <div id="accStatExports" class="acc-stat-val">15</div>
+                        <div class="acc-stat-lbl">Exported Geo Reports</div>
+                    </div>
+                </div>
+
+                <!-- Account Information Summary -->
+                <div class="acc-section-title">
+                    <i class="fa-solid fa-id-badge" style="color:var(--cyan);"></i> Account Verification Details
+                </div>
+                <div class="acc-info-grid">
+                    <div class="acc-field">
+                        <label>Email Address</label>
+                        <div id="accModalEmail" class="val">analyst@geosite.ai</div>
+                    </div>
+                    <div class="acc-field">
+                        <label>Phone Number</label>
+                        <div id="accModalPhone" class="val">+91 98765 43210</div>
+                    </div>
+                    <div class="acc-field">
+                        <label>Authentication Method</label>
+                        <div id="accModalProvider" class="val">EMAIL</div>
+                    </div>
+                    <div class="acc-field">
+                        <label>Account Identifier (UUID)</label>
+                        <div id="accModalUUID" class="val" style="font-family:monospace; font-size:12px;">UID-9824...</div>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Form -->
+                <div class="acc-section-title">
+                    <i class="fa-solid fa-user-gear" style="color:var(--blue);"></i> Edit Account Profile
+                </div>
+                <form id="accountEditForm">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+                        <div>
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="accEditName" class="auth-input" style="padding-left:14px;">
+                        </div>
+                        <div>
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" id="accEditPhone" class="auth-input" style="padding-left:14px;">
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+                        <div>
+                            <label class="form-label">Company / Entity</label>
+                            <input type="text" id="accEditCompany" class="auth-input" style="padding-left:14px;">
+                        </div>
+                        <div>
+                            <label class="form-label">Professional Role</label>
+                            <input type="text" id="accEditRole" class="auth-input" style="padding-left:14px;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <label class="form-label">Bio / Focus Area</label>
+                        <input type="text" id="accEditBio" class="auth-input" style="padding-left:14px;" placeholder="e.g. Infrastructure site planning">
+                    </div>
+                    <div style="text-align:right;">
+                        <button type="submit" id="saveProfileBtn" class="btn-ghost" style="border-color:#38bdf8; color:#38bdf8; padding:8px 18px; font-weight:700;">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Login History Audit Trail -->
+                <div class="acc-section-title" style="margin-top:24px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color:var(--emerald);"></i> Login Audit Trail (Database Stored)
+                </div>
+                <div style="border:1px solid rgba(255,255,255,0.06); border-radius:10px; overflow:hidden;">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>IP Address</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accAuditHistoryBody">
+                            <tr><td colspan="4" style="text-align:center; color:#64748b;">Loading audit logs...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="account-dialog-footer">
+                <button type="button" id="logoutBtn" style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239, 68, 68, 0.4); color:#fca5a5; padding:8px 16px; border-radius:8px; font-size:12.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+                </button>
+                <div style="font-size:11.5px; color:#64748b;">
+                    Session encrypted with 256-bit token
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         JS MODULES
+    ══════════════════════════════════════════ -->
+    <script src="./js/datasets_data.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/charts.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/profile_menu.js"></script>
+    <script src="./js/auth.js"></script>
+
+    <!-- Bridge: map old HTML IDs to new CSS structure -->
+    <script>
+        // The app.js uses "compareFloatingBar" — bridge to new ID
+        Object.defineProperty(window, 'compareFloatingBar', {
+            get: () => document.getElementById('compare-bar')
+        });
+
+        // Inspector drawer open/close with new class system
+        const _origOpenInspector = window.openSiteInspector;
+        const _origCloseInspector = window.closeSiteInspector;
+
+        function openSiteInspector() {
+            document.getElementById('site-inspector').classList.add('open');
+        }
+
+        function closeSiteInspector() {
+            document.getElementById('site-inspector').classList.remove('open');
+        }
+
+        // Comparison modal: class-based open/close
+        function openComparisonModal() {
+            document.getElementById('comparisonModal').classList.add('open');
+        }
+        function closeComparisonModal() {
+            document.getElementById('comparisonModal').classList.remove('open');
+        }
+
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('open');
+        }
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('open');
+        }
+
+        // Basemap switcher active state
+        function setBaseMapHighlight(theme) {
+            document.querySelectorAll('.bm-btn').forEach(btn => btn.classList.remove('active'));
+            const btn = document.getElementById(`bm-${theme}`);
+            if (btn) btn.classList.add('active');
+        }
+
+        // Tab switching — map to new sidebar tab classes
+        function switchTab(tab) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            const tabEl = document.getElementById(`tab-${tab}`);
+            if (tabEl) tabEl.classList.add('active');
+            const panelEl = document.getElementById(`panel-${tab}`);
+            if (panelEl) panelEl.classList.add('active');
+        }
+
+        // Compare bar visibility
+        document.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('compare-bar');
+            if (bar) {
+                const observer = new MutationObserver(() => {
+                    // keep in sync
+                });
+            }
+        });
+
+        // Route result box: bridge to new display style
+        const _routeResultBox = document.getElementById('routeResultBox');
+        if (_routeResultBox) {
+            Object.defineProperty(_routeResultBox.style, 'display', {
+                set: function(val) {
+                    this._display = val;
+                    _routeResultBox.style.setProperty('display', val, '');
+                },
+                get: function() { return this._display || 'none'; }
+            });
+        }
+
+        // Compare bar show/hide — app.js uses classList hidden
+        const _compareBar = document.getElementById('compare-bar');
+        if (_compareBar) {
+            // Patch app.js hidden class usage
+            _compareBar.classList.add = new Proxy(_compareBar.classList.add.bind(_compareBar.classList), {
+                apply(target, thisArg, [cls]) {
+                    if (cls === 'hidden') { _compareBar.style.display = 'none'; return; }
+                    target(cls);
+                }
+            });
+            _compareBar.classList.remove = new Proxy(_compareBar.classList.remove.bind(_compareBar.classList), {
+                apply(target, thisArg, [cls]) {
+                    if (cls === 'hidden') { _compareBar.style.display = 'flex'; return; }
+                    target(cls);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
