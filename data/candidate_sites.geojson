@@ -1,0 +1,845 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6238,
+          12.9358
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-001",
+        "name": "Site #1 - Koramangala 80ft Road Commercial Plot",
+        "address": "80 Feet Road, 4th Block, Koramangala",
+        "area_acres": 0.75,
+        "asking_price_inr": 185000000,
+        "asking_price_display": "\u20b918.50 Cr",
+        "latitude": 12.9358,
+        "longitude": 77.6238,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.676,
+          12.9295
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-002",
+        "name": "Site #2 - Outer Ring Road Bellandur Tech Pad",
+        "address": "Opp. RMZ Ecospace, Marathahalli-Sarjapur ORR",
+        "area_acres": 1.4,
+        "asking_price_inr": 320000000,
+        "asking_price_display": "\u20b932.00 Cr",
+        "latitude": 12.9295,
+        "longitude": 77.676,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6402,
+          12.979
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-003",
+        "name": "Site #3 - Indiranagar 100ft Road Corner Site",
+        "address": "100 Feet Rd, HAL 2nd Stage, Indiranagar",
+        "area_acres": 0.65,
+        "asking_price_inr": 210000000,
+        "asking_price_display": "\u20b921.00 Cr",
+        "latitude": 12.979,
+        "longitude": 77.6402,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.7475,
+          12.9715
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-004",
+        "name": "Site #4 - Whitefield ITPL Main Road EV Hub",
+        "address": "ITPB Main Road, Pattandur Agrahara, Whitefield",
+        "area_acres": 1.8,
+        "asking_price_inr": 240000000,
+        "asking_price_display": "\u20b924.00 Cr",
+        "latitude": 12.9715,
+        "longitude": 77.7475,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.675,
+          12.8415
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-005",
+        "name": "Site #5 - Electronic City Phase 1 Highway Parcel",
+        "address": "Hosur Main Road, Electronic City Phase 1",
+        "area_acres": 2.5,
+        "asking_price_inr": 195000000,
+        "asking_price_display": "\u20b919.50 Cr",
+        "latitude": 12.8415,
+        "longitude": 77.675,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.643,
+          12.9135
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-006",
+        "name": "Site #6 - HSR Layout Sector 1 Commercial Pad",
+        "address": "19th Main Road, Sector 1, HSR Layout",
+        "area_acres": 0.85,
+        "asking_price_inr": 175000000,
+        "asking_price_display": "\u20b917.50 Cr",
+        "latitude": 12.9135,
+        "longitude": 77.643,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.618,
+          13.042
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-007",
+        "name": "Site #7 - Manyata Tech Park Gateway Plot",
+        "address": "Thanisandra Main Rd, Nagavara",
+        "area_acres": 2.2,
+        "asking_price_inr": 260000000,
+        "asking_price_display": "\u20b926.00 Cr",
+        "latitude": 13.042,
+        "longitude": 77.618,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.514,
+          13.032
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-008",
+        "name": "Site #8 - Peenya Industrial 4th Phase Logistics Lot",
+        "address": "4th Phase, Peenya Industrial Area",
+        "area_acres": 5.5,
+        "asking_price_inr": 160000000,
+        "asking_price_display": "\u20b916.00 Cr",
+        "latitude": 13.032,
+        "longitude": 77.514,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.702,
+          13.185
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-009",
+        "name": "Site #9 - Airport Road Devanahalli Logistics Pad",
+        "address": "NH-44 Airport Corridor, Devanahalli",
+        "area_acres": 8.0,
+        "asking_price_inr": 220000000,
+        "asking_price_display": "\u20b922.00 Cr",
+        "latitude": 13.185,
+        "longitude": 77.702,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.608,
+          12.9745
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-010",
+        "name": "Site #10 - MG Road Commercial Redevelopment Site",
+        "address": "MG Road near Trinity Metro Station",
+        "area_acres": 0.55,
+        "asking_price_inr": 290000000,
+        "asking_price_display": "\u20b929.00 Cr",
+        "latitude": 12.9745,
+        "longitude": 77.608,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.702,
+          12.956
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-011",
+        "name": "Site #11 - Marathahalli Bridge Junction Site",
+        "address": "Varthur Main Rd, Marathahalli",
+        "area_acres": 1.1,
+        "asking_price_inr": 150000000,
+        "asking_price_display": "\u20b915.00 Cr",
+        "latitude": 12.956,
+        "longitude": 77.702,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.585,
+          12.91
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-012",
+        "name": "Site #12 - JP Nagar 24th Main Retail Parcel",
+        "address": "24th Main, JP Nagar 5th Phase",
+        "area_acres": 0.9,
+        "asking_price_inr": 140000000,
+        "asking_price_display": "\u20b914.00 Cr",
+        "latitude": 12.91,
+        "longitude": 77.585,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.552,
+          13.025
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-013",
+        "name": "Site #13 - Yeshwanthpur Express Hub Site",
+        "address": "Tumkur Road, Yeshwanthpur Industrial Suburb",
+        "area_acres": 2.1,
+        "asking_price_inr": 210000000,
+        "asking_price_display": "\u20b921.00 Cr",
+        "latitude": 13.025,
+        "longitude": 77.552,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.688,
+          12.908
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-014",
+        "name": "Site #14 - Sarjapur Road WIPRO Corporate Pad",
+        "address": "Sarjapur Main Road, Doddakannelli",
+        "area_acres": 3.2,
+        "asking_price_inr": 230000000,
+        "asking_price_display": "\u20b923.00 Cr",
+        "latitude": 12.908,
+        "longitude": 77.688,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.593,
+          13.038
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-015",
+        "name": "Site #15 - Hebbal Flyover North Commercial Plot",
+        "address": "Bellary Road, Hebbal Kempapura",
+        "area_acres": 1.6,
+        "asking_price_inr": 250000000,
+        "asking_price_display": "\u20b925.00 Cr",
+        "latitude": 13.038,
+        "longitude": 77.593,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.686,
+          12.818
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-016",
+        "name": "Site #16 - Bommasandra Industrial Link Plot",
+        "address": "Bommasandra Industrial Area, Hosur Road",
+        "area_acres": 6.0,
+        "asking_price_inr": 130000000,
+        "asking_price_display": "\u20b913.00 Cr",
+        "latitude": 12.818,
+        "longitude": 77.686,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.717,
+          12.993
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-017",
+        "name": "Site #17 - Hoodi Junction Metro Fringe Site",
+        "address": "Hoodi Main Rd, Mahadevapura",
+        "area_acres": 1.75,
+        "asking_price_inr": 180000000,
+        "asking_price_display": "\u20b918.00 Cr",
+        "latitude": 12.993,
+        "longitude": 77.717,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.584,
+          12.928
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-018",
+        "name": "Site #18 - Jayanagar 4th Block Shopping Pad",
+        "address": "11th Main, 4th Block, Jayanagar",
+        "area_acres": 0.7,
+        "asking_price_inr": 190000000,
+        "asking_price_display": "\u20b919.00 Cr",
+        "latitude": 12.928,
+        "longitude": 77.584,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.588,
+          13.102
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-019",
+        "name": "Site #19 - Yelahanka New Town Express Pad",
+        "address": "Major Sandeep Unnikrishnan Rd, Yelahanka",
+        "area_acres": 2.8,
+        "asking_price_inr": 165000000,
+        "asking_price_display": "\u20b916.50 Cr",
+        "latitude": 13.102,
+        "longitude": 77.588,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.548,
+          12.994
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-020",
+        "name": "Site #20 - Rajajinagar Industrial Town Site",
+        "address": "West of Chord Road, Rajajinagar",
+        "area_acres": 1.3,
+        "asking_price_inr": 195000000,
+        "asking_price_display": "\u20b919.50 Cr",
+        "latitude": 12.994,
+        "longitude": 77.548,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.758,
+          12.998
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-021",
+        "name": "Site #21 - Kadugodi Tree Park Tech Site",
+        "address": "Whitefield-Hoskote Road, Kadugodi",
+        "area_acres": 3.0,
+        "asking_price_inr": 170000000,
+        "asking_price_display": "\u20b917.00 Cr",
+        "latitude": 12.998,
+        "longitude": 77.758,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.625,
+          12.9185
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-022",
+        "name": "Site #22 - Silk Board Transit Interchange Pad",
+        "address": "Hosur Road, Madiwala / Silk Board",
+        "area_acres": 1.05,
+        "asking_price_inr": 230000000,
+        "asking_price_display": "\u20b923.00 Cr",
+        "latitude": 12.9185,
+        "longitude": 77.625,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.601,
+          12.895
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-023",
+        "name": "Site #23 - Bannerghatta Road IIM-B Fringe Site",
+        "address": "Bannerghatta Main Road, Bilekahalli, Bengaluru",
+        "area_acres": 1.5,
+        "asking_price_inr": 185000000,
+        "asking_price_display": "\u20b918.50 Cr",
+        "latitude": 12.895,
+        "longitude": 77.601,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.638,
+          12.962
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-024",
+        "name": "Site #24 - Domlur Flyover Corporate Plot",
+        "address": "Intermediate Ring Road, Domlur, Bengaluru",
+        "area_acres": 1.2,
+        "asking_price_inr": 240000000,
+        "asking_price_display": "\u20b924.00 Cr",
+        "latitude": 12.962,
+        "longitude": 77.638,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.668,
+          12.934
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-025",
+        "name": "Site #25 - Bellandur Lake Lowland Restricted Plot",
+        "address": "Bellandur Lake Wetland Buffer Margin, Bengaluru",
+        "area_acres": 1.1,
+        "asking_price_inr": 85000000,
+        "asking_price_display": "\u20b98.50 Cr",
+        "latitude": 12.934,
+        "longitude": 77.668,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8685,
+          19.0665
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-026",
+        "name": "Site #26 - Mumbai BKC Commercial Gateway Parcel",
+        "address": "G-Block, Bandra Kurla Complex (BKC), Mumbai",
+        "area_acres": 1.2,
+        "asking_price_inr": 580000000,
+        "asking_price_display": "\u20b958.00 Cr",
+        "latitude": 19.0665,
+        "longitude": 72.8685,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.045,
+          19.022
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-027",
+        "name": "Site #27 - Navi Mumbai JNPT Expressway Logistics Hub",
+        "address": "Sion-Panvel Highway / JNPT Port Corridor, Navi Mumbai",
+        "area_acres": 6.5,
+        "asking_price_inr": 290000000,
+        "asking_price_display": "\u20b929.00 Cr",
+        "latitude": 19.022,
+        "longitude": 73.045,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.089,
+          28.492
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-028",
+        "name": "Site #28 - Gurugram Cyber City / NH-48 Commercial Pad",
+        "address": "DLF Phase 2, NH-48 Express Corridor, Gurugram",
+        "area_acres": 2.1,
+        "asking_price_inr": 420000000,
+        "asking_price_display": "\u20b942.00 Cr",
+        "latitude": 28.492,
+        "longitude": 77.089,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.408,
+          28.502
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-029",
+        "name": "Site #29 - Noida Expressway Sector 135 Tech Campus",
+        "address": "Noida-Greater Noida Expressway, Sector 135, Noida",
+        "area_acres": 3.8,
+        "asking_price_inr": 310000000,
+        "asking_price_display": "\u20b931.00 Cr",
+        "latitude": 28.502,
+        "longitude": 77.408,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.121,
+          28.552
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-030",
+        "name": "Site #30 - Delhi Aerocity Hospitality & Transit Pad",
+        "address": "Northern Access Rd, IGI Airport Aerocity, New Delhi",
+        "area_acres": 1.8,
+        "asking_price_inr": 490000000,
+        "asking_price_display": "\u20b949.00 Cr",
+        "latitude": 28.552,
+        "longitude": 77.121,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.378,
+          17.449
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-031",
+        "name": "Site #31 - Hyderabad HITEC City Cyber Towers Plot",
+        "address": "HITEC City Main Road, Madhapur, Hyderabad",
+        "area_acres": 1.95,
+        "asking_price_inr": 340000000,
+        "asking_price_display": "\u20b934.00 Cr",
+        "latitude": 17.449,
+        "longitude": 78.378,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.342,
+          17.418
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-032",
+        "name": "Site #32 - Hyderabad Financial District Gachibowli Pad",
+        "address": "Nanakramguda Financial District, Gachibowli, Hyderabad",
+        "area_acres": 4.2,
+        "asking_price_inr": 380000000,
+        "asking_price_display": "\u20b938.00 Cr",
+        "latitude": 17.418,
+        "longitude": 78.342,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.228,
+          12.901
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-033",
+        "name": "Site #33 - Chennai OMR Sholinganallur IT Gateway",
+        "address": "Old Mahabalipuram Road (OMR), Sholinganallur, Chennai",
+        "area_acres": 2.5,
+        "asking_price_inr": 260000000,
+        "asking_price_display": "\u20b926.00 Cr",
+        "latitude": 12.901,
+        "longitude": 80.228,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.952,
+          12.968
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-034",
+        "name": "Site #34 - Chennai Sriperumbudur EV & Auto Mega Plot",
+        "address": "NH-48 Industrial Corridor, Sriperumbudur, Tamil Nadu",
+        "area_acres": 9.5,
+        "asking_price_inr": 210000000,
+        "asking_price_display": "\u20b921.00 Cr",
+        "latitude": 12.968,
+        "longitude": 79.952,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.738,
+          18.592
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-035",
+        "name": "Site #35 - Pune Hinjewadi Phase 1 Software Pad",
+        "address": "Rajiv Gandhi Infotech Park, Phase 1, Hinjewadi, Pune",
+        "area_acres": 3.1,
+        "asking_price_inr": 280000000,
+        "asking_price_display": "\u20b928.00 Cr",
+        "latitude": 18.592,
+        "longitude": 73.738,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.854,
+          18.752
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-036",
+        "name": "Site #36 - Pune Chakan Auto Industrial Hub Lot",
+        "address": "MIDC Phase 2, Chakan Industrial Area, Pune",
+        "area_acres": 7.8,
+        "asking_price_inr": 180000000,
+        "asking_price_display": "\u20b918.00 Cr",
+        "latitude": 18.752,
+        "longitude": 73.854,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.508,
+          23.025
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-037",
+        "name": "Site #37 - Ahmedabad SG Highway Commercial Core",
+        "address": "Sarkhej-Gandhinagar (SG) Highway, Bodakdev, Ahmedabad",
+        "area_acres": 1.6,
+        "asking_price_inr": 240000000,
+        "asking_price_display": "\u20b924.00 Cr",
+        "latitude": 23.025,
+        "longitude": 72.508,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.684,
+          23.162
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-038",
+        "name": "Site #38 - GIFT City International Finance SEZ Pad",
+        "address": "GIFT City Special Economic Zone, Gandhinagar, Gujarat",
+        "area_acres": 3.4,
+        "asking_price_inr": 350000000,
+        "asking_price_display": "\u20b935.00 Cr",
+        "latitude": 23.162,
+        "longitude": 72.684,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.432,
+          22.581
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-039",
+        "name": "Site #39 - Kolkata Salt Lake Sector V Tech Pad",
+        "address": "Sector V, Salt Lake Electronic Complex, Kolkata",
+        "area_acres": 1.75,
+        "asking_price_inr": 195000000,
+        "asking_price_display": "\u20b919.50 Cr",
+        "latitude": 22.581,
+        "longitude": 88.432,
+        "layer_type": "candidate_site"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.829,
+          26.782
+        ]
+      },
+      "properties": {
+        "site_id": "SITE-040",
+        "name": "Site #40 - Jaipur Sitapura Industrial & Solar Logistics",
+        "address": "RIICO Industrial Area, Sitapura, Jaipur, Rajasthan",
+        "area_acres": 5.2,
+        "asking_price_inr": 150000000,
+        "asking_price_display": "\u20b915.00 Cr",
+        "latitude": 26.782,
+        "longitude": 75.829,
+        "layer_type": "candidate_site"
+      }
+    }
+  ]
+}
